@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/Endika/converthub/compare/v1.5.1...v1.5.2) (2026-05-20)
+
+
+### Chores
+
+* remove unused empty infra dirs (http, storage) ([cfd2b52](https://github.com/Endika/converthub/commit/cfd2b52cfd8e909961bb32146dd8d22d05e519ea))
+
 ## [1.5.1](https://github.com/Endika/converthub/compare/v1.5.0...v1.5.1) (2026-05-20)
 
 
