@@ -232,6 +232,26 @@ body {
   font-size: 1.05rem;
 }
 
+.converter__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: var(--space-3);
+  align-items: stretch;
+}
+
+.converter__actions > .btn--cta {
+  flex: 1;
+  grid-column: auto;
+}
+
+.converter__actions > .btn--icon {
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  padding: 0 var(--space-4);
+  font-size: 1.15rem;
+}
+
 .btn--ghost {
   background: transparent;
   color: var(--color-muted);

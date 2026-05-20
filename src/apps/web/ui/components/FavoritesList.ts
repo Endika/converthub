@@ -1,8 +1,11 @@
+import type { ConvertMoneyUseCase } from '../../../../contexts/conversion/application/ConvertMoneyUseCase';
 import type { GetFavoritesUseCase } from '../../../../contexts/favorites/application/GetFavoritesUseCase';
 import type { RemoveFavoriteUseCase } from '../../../../contexts/favorites/application/RemoveFavoriteUseCase';
 import type { Favorite } from '../../../../contexts/favorites/domain/model/Favorite';
 import type { LanguageService } from '../../../../contexts/language/domain/services/LanguageService';
 import type { TranslationKey } from '../../../../contexts/language/domain/translations/Translations';
+import { isOk } from '../../../../shared-kernel/domain/Result';
+import { formatAmount } from '../format';
 
 const escapeHtml = (s: string): string =>
   s
@@ -23,6 +26,7 @@ export class FavoritesList {
     private readonly languageService: LanguageService,
     private readonly getFavoritesUseCase: GetFavoritesUseCase,
     private readonly removeFavoriteUseCase: RemoveFavoriteUseCase,
+    private readonly convertMoneyUseCase: ConvertMoneyUseCase,
     private readonly callbacks: FavoritesListCallbacks = {},
   ) {
     this.render();
@@ -35,6 +39,19 @@ export class FavoritesList {
 
   refresh(): void {
     this.render();
+  }
+
+  private liveResultLabel(favorite: Favorite): string {
+    if (favorite.type !== 'money' || favorite.amount === null) {
+      return favorite.type;
+    }
+    const result = this.convertMoneyUseCase.execute(
+      favorite.amount,
+      favorite.fromUnit,
+      favorite.toUnit,
+    );
+    if (!isOk(result)) return favorite.type;
+    return `≈ ${formatAmount(result.value.amount)} ${favorite.toUnit}`;
   }
 
   private render(): void {
@@ -50,7 +67,7 @@ export class FavoritesList {
                 <li class="entry-list__item entry-list__item--clickable" data-id="${escapeHtml(f.id)}">
                   <button type="button" class="entry-list__action" data-action="apply" aria-label="${escapeHtml(f.label)}">
                     <span class="entry-list__primary">${escapeHtml(f.label)}</span>
-                    <span class="entry-list__secondary">${escapeHtml(f.type)}</span>
+                    <span class="entry-list__secondary">${escapeHtml(this.liveResultLabel(f))}</span>
                   </button>
                   <button type="button" class="btn btn--ghost btn--icon" data-action="remove" aria-label="${t('common_delete')}">
                     ×

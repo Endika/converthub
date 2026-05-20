@@ -148,7 +148,16 @@ export class MoneyConverter {
           </div>
           <span class="field__hint" data-hint="to"></span>
         </div>
-        <button type="submit" class="btn btn--primary btn--cta">${t('common_convert')}</button>
+        <div class="converter__actions">
+          <button
+            type="button"
+            class="btn btn--ghost btn--icon"
+            data-action="swap"
+            aria-label="${t('common_swap')}"
+            title="${t('common_swap')}"
+          >⇄</button>
+          <button type="submit" class="btn btn--primary btn--cta">${t('common_convert')}</button>
+        </div>
         <output class="converter__result" aria-live="polite"></output>
         <button
           type="button"
@@ -212,12 +221,24 @@ export class MoneyConverter {
       void this.refreshRates();
     });
     this.root
+      .querySelector<HTMLButtonElement>('[data-action="swap"]')
+      ?.addEventListener('click', () => this.swap());
+    this.root
       .querySelector<HTMLButtonElement>('[data-action="save-favorite"]')
       ?.addEventListener('click', () => this.saveAsFavorite());
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       this.convert();
     });
+  }
+
+  private swap(): void {
+    const from = this.fromSelect.value;
+    const to = this.toSelect.value;
+    this.fromSelect.value = to;
+    this.toSelect.value = from;
+    this.refreshHints();
+    this.refreshPinButtons();
   }
 
   private refreshHints(): void {

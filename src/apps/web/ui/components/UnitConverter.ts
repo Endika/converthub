@@ -82,7 +82,16 @@ export class UnitConverter {
           <span class="field__label">${t('common_to')}</span>
           <select name="to">${options}</select>
         </label>
-        <button type="submit" class="btn btn--primary">${t('common_convert')}</button>
+        <div class="converter__actions">
+          <button
+            type="button"
+            class="btn btn--ghost btn--icon"
+            data-action="swap"
+            aria-label="${t('common_swap')}"
+            title="${t('common_swap')}"
+          >⇄</button>
+          <button type="submit" class="btn btn--primary btn--cta">${t('common_convert')}</button>
+        </div>
         <output class="converter__result" aria-live="polite"></output>
       </form>
     `;
@@ -97,10 +106,28 @@ export class UnitConverter {
     this.fromSelect.value = this.config.defaultFrom;
     this.toSelect.value = this.config.defaultTo;
 
+    this.root
+      .querySelector<HTMLButtonElement>('[data-action="swap"]')
+      ?.addEventListener('click', () => {
+        const from = this.fromSelect.value;
+        this.fromSelect.value = this.toSelect.value;
+        this.toSelect.value = from;
+      });
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       this.convert();
     });
+  }
+
+  setPair(from: string, to: string, amount?: number | null): void {
+    const exists = (sel: HTMLSelectElement, v: string): boolean =>
+      Array.from(sel.options).some((o) => o.value === v);
+    if (exists(this.fromSelect, from)) this.fromSelect.value = from;
+    if (exists(this.toSelect, to)) this.toSelect.value = to;
+    if (amount !== undefined && amount !== null && Number.isFinite(amount)) {
+      this.amountInput.value = formatAmount(amount);
+    }
   }
 
   private convert(): void {

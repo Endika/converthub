@@ -245,6 +245,7 @@ export class HomePage {
         this.container.get<RemoveFavoriteUseCase>(
           SERVICES.removeFavoriteUseCase,
         ),
+        this.container.get(SERVICES.convertMoneyUseCase),
         { onApply: (favorite) => this.applyFavorite(favorite) },
       );
     } else {
