@@ -443,3 +443,91 @@ body {
   justify-self: end;
   margin-top: var(--space-2);
 }
+
+/* Tablet */
+@media (max-width: 900px) {
+  .app-header {
+    padding: var(--space-4) var(--space-6);
+  }
+  .tabs,
+  .app-main {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+  .converter--money {
+    grid-template-columns: minmax(7rem, 1fr) minmax(11rem, 1.5fr);
+  }
+  .converter--money .field--amount {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .app-header {
+    padding: var(--space-3) var(--space-4);
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .app-header h1 {
+    font-size: 1.25rem;
+  }
+  .tabs {
+    padding: var(--space-3) var(--space-4);
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+  .app-main {
+    padding: var(--space-4);
+    gap: var(--space-4);
+  }
+  .card {
+    padding: var(--space-4);
+  }
+  .converter,
+  .converter--money {
+    grid-template-columns: 1fr;
+  }
+  .converter--money .field--amount {
+    grid-column: auto;
+  }
+  .converter__result {
+    font-size: 1.1rem;
+    padding: var(--space-3);
+  }
+  .btn--cta {
+    padding: var(--space-3);
+    font-size: 1rem;
+  }
+  .note-form {
+    grid-template-columns: 1fr;
+  }
+  .entry-list__item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-2);
+  }
+  .entry-list__item--triple {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+  .rates-status {
+    flex-wrap: wrap;
+  }
+}
+
+/* Tiny phones */
+@media (max-width: 380px) {
+  .lang-btn {
+    padding: var(--space-1) var(--space-2);
+    font-size: 0.75rem;
+  }
+  .tab {
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.85rem;
+  }
+}
