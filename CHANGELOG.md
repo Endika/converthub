@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/Endika/converthub/compare/v1.3.0...v1.4.0) (2026-05-20)
+
+
+### Features
+
+* **ui:** own favicon, amount-aware favorites, clickable history entries, hover polish ([25e2eda](https://github.com/Endika/converthub/commit/25e2eda0d27b2050cc4cb53114f345c6dae4a705))
+
 ## [1.3.0](https://github.com/Endika/converthub/compare/v1.2.0...v1.3.0) (2026-05-20)
 
 
