@@ -22,8 +22,13 @@ if (exchangeRateService.needsUpdate()) {
   void updater.execute();
 }
 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
-    void navigator.serviceWorker.register('/sw.js', { scope: '/' });
+    const swUrl = new URL('sw.js', import.meta.env.BASE_URL).pathname;
+    void navigator.serviceWorker
+      .register(swUrl, { scope: import.meta.env.BASE_URL })
+      .catch(() => {
+        /* Service worker is optional — fail silently until vite-plugin-pwa is wired. */
+      });
   });
 }

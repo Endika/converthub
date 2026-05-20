@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 
 export default defineConfig({
   root: './',
-  base: '/',
+  base: process.env['VITE_BASE_PATH'] ?? '/converthub/',
   publicDir: 'public',
 
   server: {
