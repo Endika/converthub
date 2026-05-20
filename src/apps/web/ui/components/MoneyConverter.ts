@@ -60,6 +60,15 @@ export class MoneyConverter {
     this.unsubscribe();
   }
 
+  setPair(from: string, to: string): void {
+    const optionExists = (sel: HTMLSelectElement, value: string): boolean =>
+      Array.from(sel.options).some((o) => o.value === value);
+    if (optionExists(this.fromSelect, from)) this.fromSelect.value = from;
+    if (optionExists(this.toSelect, to)) this.toSelect.value = to;
+    this.refreshHints();
+    this.refreshPinButtons();
+  }
+
   private buildDisplayNames(): Intl.DisplayNames | null {
     try {
       return new Intl.DisplayNames([this.languageService.getCurrent().value], {

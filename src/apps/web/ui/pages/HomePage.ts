@@ -14,6 +14,7 @@ import type { ExchangeRateService } from '../../../../contexts/exchange-rate/dom
 import type { AddFavoriteUseCase } from '../../../../contexts/favorites/application/AddFavoriteUseCase';
 import type { GetFavoritesUseCase } from '../../../../contexts/favorites/application/GetFavoritesUseCase';
 import type { RemoveFavoriteUseCase } from '../../../../contexts/favorites/application/RemoveFavoriteUseCase';
+import type { Favorite } from '../../../../contexts/favorites/domain/model/Favorite';
 import type { AddToHistoryUseCase } from '../../../../contexts/history/application/AddToHistoryUseCase';
 import type { LanguageService } from '../../../../contexts/language/domain/services/LanguageService';
 import type { AddNoteUseCase } from '../../../../contexts/notes/application/AddNoteUseCase';
@@ -181,6 +182,25 @@ export class HomePage {
     this.switchTo('currency');
   }
 
+  private applyFavorite(favorite: Favorite): void {
+    const tabByType: Record<Favorite['type'], TabKey | null> = {
+      money: 'currency',
+      distance: 'distance',
+      weight: 'weight',
+      volume: 'volume',
+      temperature: 'temperature',
+      speed: 'speed',
+      size: null,
+    };
+    const tab = tabByType[favorite.type];
+    if (tab === null) return;
+    this.switchTo(tab);
+    const conv = this.currentConverter as unknown as {
+      setPair?: (from: string, to: string) => void;
+    } | null;
+    conv?.setPair?.(favorite.fromUnit, favorite.toUnit);
+  }
+
   private switchSide(key: SidePanelKey): void {
     this.currentSideList?.destroy();
     const region = this.sidePanel.contentRegion();
@@ -203,6 +223,7 @@ export class HomePage {
         this.container.get<RemoveFavoriteUseCase>(
           SERVICES.removeFavoriteUseCase,
         ),
+        { onApply: (favorite) => this.applyFavorite(favorite) },
       );
     } else {
       this.currentSideList = new NotesList(

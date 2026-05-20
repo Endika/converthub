@@ -1,5 +1,6 @@
 import type { GetFavoritesUseCase } from '../../../../contexts/favorites/application/GetFavoritesUseCase';
 import type { RemoveFavoriteUseCase } from '../../../../contexts/favorites/application/RemoveFavoriteUseCase';
+import type { Favorite } from '../../../../contexts/favorites/domain/model/Favorite';
 import type { LanguageService } from '../../../../contexts/language/domain/services/LanguageService';
 import type { TranslationKey } from '../../../../contexts/language/domain/translations/Translations';
 
@@ -10,6 +11,10 @@ const escapeHtml = (s: string): string =>
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 
+export interface FavoritesListCallbacks {
+  onApply?: (favorite: Favorite) => void;
+}
+
 export class FavoritesList {
   private readonly unsubscribe: () => void;
 
@@ -18,6 +23,7 @@ export class FavoritesList {
     private readonly languageService: LanguageService,
     private readonly getFavoritesUseCase: GetFavoritesUseCase,
     private readonly removeFavoriteUseCase: RemoveFavoriteUseCase,
+    private readonly callbacks: FavoritesListCallbacks = {},
   ) {
     this.render();
     this.unsubscribe = this.languageService.onChange(() => this.render());
@@ -41,9 +47,11 @@ export class FavoritesList {
         : `<ul class="entry-list">${items
             .map(
               (f) => `
-                <li class="entry-list__item" data-id="${escapeHtml(f.id)}">
-                  <span class="entry-list__primary">${escapeHtml(f.label)}</span>
-                  <span class="entry-list__secondary">${escapeHtml(f.type)}</span>
+                <li class="entry-list__item entry-list__item--clickable" data-id="${escapeHtml(f.id)}">
+                  <button type="button" class="entry-list__action" data-action="apply" aria-label="${escapeHtml(f.label)}">
+                    <span class="entry-list__primary">${escapeHtml(f.label)}</span>
+                    <span class="entry-list__secondary">${escapeHtml(f.type)}</span>
+                  </button>
                   <button type="button" class="btn btn--ghost btn--icon" data-action="remove" aria-label="${t('common_delete')}">
                     ×
                   </button>
@@ -57,10 +65,25 @@ export class FavoritesList {
       ${body}
     `;
 
+    const itemsById = new Map(items.map((f) => [f.id, f]));
+
+    this.root
+      .querySelectorAll<HTMLButtonElement>('[data-action="apply"]')
+      .forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.closest<HTMLElement>('[data-id]')?.dataset['id'];
+          if (id === undefined) return;
+          const favorite = itemsById.get(id);
+          if (favorite === undefined) return;
+          this.callbacks.onApply?.(favorite);
+        });
+      });
+
     this.root
       .querySelectorAll<HTMLButtonElement>('[data-action="remove"]')
       .forEach((btn) => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
           const id = btn.closest<HTMLElement>('[data-id]')?.dataset['id'];
           if (id === undefined) return;
           this.removeFavoriteUseCase.execute(id);

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { GetFavoritesUseCase } from '../../../../../contexts/favorites/application/GetFavoritesUseCase';
 import { RemoveFavoriteUseCase } from '../../../../../contexts/favorites/application/RemoveFavoriteUseCase';
 import { Favorite } from '../../../../../contexts/favorites/domain/model/Favorite';
@@ -6,7 +6,7 @@ import type { FavoritesRepositoryPort } from '../../../../../contexts/favorites/
 import { FavoritesService } from '../../../../../contexts/favorites/domain/services/FavoritesService';
 import { LanguageCode } from '../../../../../contexts/language/domain/model/LanguageCode';
 import { LanguageService } from '../../../../../contexts/language/domain/services/LanguageService';
-import { FavoritesList } from '../FavoritesList';
+import { FavoritesList, type FavoritesListCallbacks } from '../FavoritesList';
 
 const buildRepo = (initial: Favorite[] = []): FavoritesRepositoryPort => {
   let state = [...initial];
@@ -20,6 +20,7 @@ const buildRepo = (initial: Favorite[] = []): FavoritesRepositoryPort => {
 
 const mount = (
   initial: Favorite[] = [],
+  callbacks: FavoritesListCallbacks = {},
 ): { root: HTMLElement; repo: FavoritesRepositoryPort } => {
   const root = document.createElement('div');
   const language = new LanguageService(LanguageCode.fromTrusted('en'));
@@ -30,6 +31,7 @@ const mount = (
     language,
     new GetFavoritesUseCase(service),
     new RemoveFavoriteUseCase(service),
+    callbacks,
   );
   return { root, repo };
 };
@@ -65,5 +67,33 @@ describe('FavoritesList', () => {
     root.querySelector<HTMLButtonElement>('[data-action="remove"]')?.click();
     expect(repo.loadAll()).toHaveLength(0);
     expect(root.querySelectorAll('[data-id]')).toHaveLength(0);
+  });
+
+  it('emits onApply with the full favorite when an item is clicked', () => {
+    const fav = Favorite.create({
+      type: 'money',
+      fromUnit: 'USD',
+      toUnit: 'JPY',
+      label: 'USD → JPY',
+    });
+    const onApply = vi.fn();
+    const { root } = mount([fav], { onApply });
+    root.querySelector<HTMLButtonElement>('[data-action="apply"]')?.click();
+    expect(onApply).toHaveBeenCalledTimes(1);
+    expect(onApply.mock.calls[0]?.[0]?.fromUnit).toBe('USD');
+    expect(onApply.mock.calls[0]?.[0]?.toUnit).toBe('JPY');
+  });
+
+  it('removing a favorite does not also fire onApply', () => {
+    const fav = Favorite.create({
+      type: 'money',
+      fromUnit: 'USD',
+      toUnit: 'EUR',
+      label: 'USD → EUR',
+    });
+    const onApply = vi.fn();
+    const { root } = mount([fav], { onApply });
+    root.querySelector<HTMLButtonElement>('[data-action="remove"]')?.click();
+    expect(onApply).not.toHaveBeenCalled();
   });
 });
