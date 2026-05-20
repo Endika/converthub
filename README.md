@@ -1,34 +1,37 @@
 # ConvertHub
 
+[**Live demo →**](https://endika.github.io/converthub/)
+
 Offline-first PWA to convert currencies, units and clothing/shoe sizes. Multi-language (EN / ES / EU), no ads, no tracking.
 
 Built with TypeScript (strict), Vite, Vitest and Playwright. Architecture: **Hexagonal (Ports & Adapters) + tactical DDD + SOLID**.
 
 ## Stack
 
-- TypeScript 5 (strict)
+- TypeScript 6 (strict)
 - Vite 8 + vanilla DOM (no framework)
-- Vitest 3 + happy-dom (unit / integration)
+- Vitest 4 + happy-dom (unit / integration)
 - Playwright (E2E)
-- ESLint 9 + Prettier 3
+- ESLint 10 + Prettier 3
+- vite-plugin-pwa (Workbox) — installable PWA, offline cache
 - GitHub Actions CI/CD + GitHub Pages deploy
 
 ## Architecture
 
 ```
 src/
-├── contexts/             # Bounded Contexts (DDD)
-│   ├── conversion/       # Money, Distance, Weight, Volume, Temperature, Speed, Size
-│   ├── exchange-rate/    # API client + cache + freshness
-│   ├── language/         # i18n EN/ES/EU + Observer
-│   ├── history/          # 20 last conversions (FIFO)
-│   ├── favorites/        # 10 favorites max
-│   └── notes/            # 50 travel notes max
-├── shared-kernel/        # ValueObject, Entity, AggregateRoot, Result, ports
-├── shared-infrastructure/# ConsoleLogger
-├── apps/web/             # Composition root (DI container) + UI components
-├── main.ts               # Entry point
-└── sw.ts                 # Service Worker (offline cache + API network-first)
+├── contexts/                 # Bounded Contexts (DDD)
+│   ├── conversion/           # Money, Distance, Weight, Volume, Temperature, Speed, Size
+│   ├── exchange-rate/        # API client + cache + freshness
+│   ├── language/             # i18n EN/ES/EU + Observer
+│   ├── history/              # 20 last conversions (FIFO)
+│   ├── favorites/            # 10 favorites max
+│   ├── notes/                # 50 travel notes max
+│   └── pinned-currencies/    # User-pinned currency codes, shown first
+├── shared-kernel/            # ValueObject, Entity, AggregateRoot, Result, ports
+├── shared-infrastructure/    # ConsoleLogger
+├── apps/web/                 # Composition root (DI container) + UI components
+└── main.ts                   # Entry point
 ```
 
 Each Bounded Context is a mini-hexagon:
@@ -53,11 +56,9 @@ The **dependency rule** is enforced by `no-restricted-imports` in ESLint: `domai
 
 ```bash
 npm run dev             # dev server
-npm run build           # type-check (app + sw) + production build
+npm run build           # type-check + production build (+ Workbox SW)
 npm run preview         # serve dist/
-npm run type-check      # tsc --noEmit (app + sw)
-npm run type-check:app  # app only
-npm run type-check:sw   # service worker only
+npm run type-check      # tsc --noEmit
 npm run lint            # eslint .
 npm run format          # prettier --write
 npm run format:check    # prettier --check
