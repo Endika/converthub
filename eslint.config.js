@@ -37,7 +37,10 @@ export default [
     rules: baseRules,
   },
   {
-    files: ['src/contexts/*/domain/**/*.ts', 'src/shared-kernel/domain/**/*.ts'],
+    files: [
+      'src/contexts/*/domain/**/*.ts',
+      'src/shared-kernel/domain/**/*.ts',
+    ],
     rules: {
       ...baseRules,
       'no-restricted-imports': [

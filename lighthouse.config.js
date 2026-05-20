@@ -2,14 +2,14 @@
 
 /**
  * Lighthouse CI Configuration
- * 
+ *
  * Define performance budgets and thresholds for:
  * - Performance (>90)
  * - Accessibility (>90)
  * - Best Practices (>90)
  * - SEO (>90)
  * - PWA (>90)
- * 
+ *
  * Runs automatically in GitHub Actions
  */
 
@@ -48,11 +48,11 @@ module.exports = {
       // Assertions personalizadas
       assertions: {
         // Performance
-        'categories:performance': ['error', { minScore: 0.90 }],
-        'categories:accessibility': ['error', { minScore: 0.90 }],
-        'categories:best-practices': ['error', { minScore: 0.90 }],
-        'categories:seo': ['error', { minScore: 0.90 }],
-        'categories:pwa': ['error', { minScore: 0.90 }],
+        'categories:performance': ['error', { minScore: 0.9 }],
+        'categories:accessibility': ['error', { minScore: 0.9 }],
+        'categories:best-practices': ['error', { minScore: 0.9 }],
+        'categories:seo': ['error', { minScore: 0.9 }],
+        'categories:pwa': ['error', { minScore: 0.9 }],
 
         // Core Web Vitals
         'largest-contentful-paint': ['error', { maxNumericValue: 2500 }], // <2.5s
@@ -62,7 +62,7 @@ module.exports = {
         // Performance metrics
         'first-contentful-paint': ['error', { maxNumericValue: 1800 }], // <1.8s
         'speed-index': ['error', { maxNumericValue: 3387 }], // <3.4s
-        'interactive': ['error', { maxNumericValue: 3800 }], // <3.8s
+        interactive: ['error', { maxNumericValue: 3800 }], // <3.8s
         'total-blocking-time': ['error', { maxNumericValue: 200 }],
 
         // Accessibility
@@ -79,7 +79,7 @@ module.exports = {
         // SEO
         'document-title': ['error'],
         'meta-description': ['error'],
-        'viewport': ['error'],
+        viewport: ['error'],
 
         // Bundle size
         'resource-summary': [

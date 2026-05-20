@@ -21,7 +21,8 @@ export class Distance extends ValueObject<DistanceProps> {
 
   static from(value: number, unit: string): Result<Distance, DistanceError> {
     if (!isValidValue(value)) return err(new InvalidAmountError(value));
-    if (!isDistanceUnit(unit)) return err(new InvalidUnitError('distance', unit));
+    if (!isDistanceUnit(unit))
+      return err(new InvalidUnitError('distance', unit));
     return ok(new Distance(value, unit));
   }
 

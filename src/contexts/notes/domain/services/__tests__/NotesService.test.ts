@@ -60,7 +60,9 @@ describe('NotesService', () => {
   });
 
   it('removes a note by id', () => {
-    const service = new NotesService(buildRepo([note('a', 'x'), note('b', 'y')]));
+    const service = new NotesService(
+      buildRepo([note('a', 'x'), note('b', 'y')]),
+    );
     service.remove('a');
     expect(service.list().map((n) => n.id)).toEqual(['b']);
   });

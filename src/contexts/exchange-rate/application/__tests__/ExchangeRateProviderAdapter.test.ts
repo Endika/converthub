@@ -1,10 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  err,
-  isErr,
-  isOk,
-  ok,
-} from '../../../../shared-kernel/domain/Result';
+import { err, isErr, isOk, ok } from '../../../../shared-kernel/domain/Result';
 import { RateNotAvailableError } from '../../../conversion/domain/errors/RateNotAvailableError';
 import { CurrencyCode } from '../../../conversion/domain/model/CurrencyCode';
 import { RateNotFoundError } from '../../domain/errors/RateNotFoundError';

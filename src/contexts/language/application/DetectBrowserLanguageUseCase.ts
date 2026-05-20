@@ -5,9 +5,7 @@ import type { BrowserLanguageProviderPort } from '../domain/ports/out/BrowserLan
 
 const DEFAULT_LANGUAGE = LanguageCode.fromTrusted('en');
 
-export class DetectBrowserLanguageUseCase
-  implements DetectBrowserLanguagePort
-{
+export class DetectBrowserLanguageUseCase implements DetectBrowserLanguagePort {
   constructor(private readonly browser: BrowserLanguageProviderPort) {}
 
   execute(): LanguageCode {

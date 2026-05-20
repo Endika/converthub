@@ -34,7 +34,10 @@ export default defineConfig({
     alias: {
       '@contexts': resolve(__dirname, './src/contexts'),
       '@shared-kernel': resolve(__dirname, './src/shared-kernel'),
-      '@shared-infrastructure': resolve(__dirname, './src/shared-infrastructure'),
+      '@shared-infrastructure': resolve(
+        __dirname,
+        './src/shared-infrastructure',
+      ),
       '@apps': resolve(__dirname, './src/apps'),
     },
   },

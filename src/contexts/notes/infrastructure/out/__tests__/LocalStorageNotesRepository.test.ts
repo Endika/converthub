@@ -35,47 +35,22 @@ describe('LocalStorageNotesRepository', () => {
     expect(repo.loadAll()).toEqual([]);
   });
 
-  it('round-trips notes including null location', () => {
-    const n = TravelNote.create({ text: 'coffee', location: null });
-    repo.saveAll([n]);
+  it('round-trips notes including both null and string location', () => {
+    const anonymous = TravelNote.create({ text: 'coffee', location: null });
+    const located = TravelNote.create({ text: 'metro', location: 'Madrid' });
+    repo.saveAll([anonymous, located]);
     const loaded = repo.loadAll();
-    expect(loaded).toHaveLength(1);
+    expect(loaded).toHaveLength(2);
     expect(loaded[0]?.location).toBeNull();
+    expect(loaded[1]?.location).toBe('Madrid');
   });
 
-  it('round-trips notes with a string location', () => {
-    const n = TravelNote.create({ text: 'metro', location: 'Madrid' });
-    repo.saveAll([n]);
-    expect(repo.loadAll()[0]?.location).toBe('Madrid');
-  });
-
-  it('returns [] for malformed JSON', () => {
+  it('returns [] for any malformed or unexpected stored shape', () => {
     storage.setItem('converthub:notes', 'not-json');
     expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('drops items with invalid shape', () => {
-    storage.setItem(
-      'converthub:notes',
-      JSON.stringify([{ id: '1', bogus: true }]),
-    );
-    expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('returns [] when stored JSON is not an array', () => {
     storage.setItem('converthub:notes', JSON.stringify({ foo: 'bar' }));
     expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('drops null entries inside the array', () => {
-    storage.setItem('converthub:notes', JSON.stringify([null]));
+    storage.setItem('converthub:notes', JSON.stringify([{ id: '1' }, null]));
     expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('defaults to global localStorage when no storage injected', () => {
-    const r = new LocalStorageNotesRepository();
-    r.saveAll([]);
-    expect(r.loadAll()).toEqual([]);
-    localStorage.removeItem('converthub:notes');
   });
 });

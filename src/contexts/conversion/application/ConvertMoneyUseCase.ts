@@ -1,7 +1,4 @@
-import {
-  isErr,
-  type Result,
-} from '../../../shared-kernel/domain/Result';
+import { isErr, type Result } from '../../../shared-kernel/domain/Result';
 import { CurrencyCode } from '../domain/model/CurrencyCode';
 import { Money } from '../domain/model/Money';
 import type {

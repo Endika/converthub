@@ -15,7 +15,11 @@ interface SizeProps {
 }
 
 export class Size extends ValueObject<SizeProps> {
-  private constructor(label: string, category: SizeCategory, region: SizeRegion) {
+  private constructor(
+    label: string,
+    category: SizeCategory,
+    region: SizeRegion,
+  ) {
     super({ label, category, region });
   }
 

@@ -5,7 +5,9 @@ import { ExchangeRateSnapshot } from '../../model/ExchangeRateSnapshot';
 import type { ExchangeRateRepositoryPort } from '../../ports/out/ExchangeRateRepositoryPort';
 import { ExchangeRateService } from '../ExchangeRateService';
 
-const makeRepo = (snapshot: ExchangeRateSnapshot | null): ExchangeRateRepositoryPort => ({
+const makeRepo = (
+  snapshot: ExchangeRateSnapshot | null,
+): ExchangeRateRepositoryPort => ({
   load: vi.fn(() => snapshot),
   save: vi.fn(),
 });

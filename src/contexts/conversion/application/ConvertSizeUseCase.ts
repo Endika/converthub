@@ -1,8 +1,4 @@
-import {
-  err,
-  isErr,
-  type Result,
-} from '../../../shared-kernel/domain/Result';
+import { err, isErr, type Result } from '../../../shared-kernel/domain/Result';
 import { InvalidUnitError } from '../domain/errors/InvalidUnitError';
 import { isSizeRegion } from '../domain/model/catalogs/sizes';
 import { Size } from '../domain/model/Size';

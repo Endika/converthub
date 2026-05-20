@@ -1,8 +1,4 @@
-import {
-  err,
-  ok,
-  type Result,
-} from '../../../../shared-kernel/domain/Result';
+import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
 import { NoteNotFoundError } from '../errors/NoteNotFoundError';
 import { NotesFullError } from '../errors/NotesFullError';
 import type { TravelNote } from '../model/TravelNote';

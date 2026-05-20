@@ -30,7 +30,10 @@ export class ConversionEntry extends Entity<string, ConversionEntryProps> {
     props: Omit<ConversionEntryProps, 'timestamp'>,
     now: Date = new Date(),
   ): ConversionEntry {
-    return new ConversionEntry(crypto.randomUUID(), { ...props, timestamp: now });
+    return new ConversionEntry(crypto.randomUUID(), {
+      ...props,
+      timestamp: now,
+    });
   }
 
   get type(): ConversionType {

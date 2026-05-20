@@ -19,15 +19,11 @@ const buildProvider = (
 ): ExchangeRateProviderPort => ({
   getRate(c: CurrencyCode): Result<number, RateNotAvailableError> {
     const r = rates[c.value];
-    return r === undefined
-      ? err(new RateNotAvailableError(c.value))
-      : ok(r);
+    return r === undefined ? err(new RateNotAvailableError(c.value)) : ok(r);
   },
 });
 
-const buildUseCase = (
-  rates: Record<string, number>,
-): ConvertMoneyUseCase => {
+const buildUseCase = (rates: Record<string, number>): ConvertMoneyUseCase => {
   const service = new MoneyConversionService(buildProvider(rates));
   return new ConvertMoneyUseCase(service);
 };

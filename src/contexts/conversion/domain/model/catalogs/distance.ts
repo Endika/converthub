@@ -1,5 +1,12 @@
 export const DISTANCE_UNITS = [
-  'km', 'm', 'cm', 'mm', 'mi', 'ft', 'yd', 'nmi',
+  'km',
+  'm',
+  'cm',
+  'mm',
+  'mi',
+  'ft',
+  'yd',
+  'nmi',
 ] as const;
 
 export type DistanceUnit = (typeof DISTANCE_UNITS)[number];

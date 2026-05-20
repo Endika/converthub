@@ -1,8 +1,4 @@
-import {
-  err,
-  ok,
-  type Result,
-} from '../../../../shared-kernel/domain/Result';
+import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
 import { FavoritesFullError } from '../errors/FavoritesFullError';
 import type { Favorite } from '../model/Favorite';
 import type { FavoritesRepositoryPort } from '../ports/out/FavoritesRepositoryPort';

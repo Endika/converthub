@@ -18,10 +18,35 @@ export interface Translations {
   common_save: string;
   common_delete: string;
   common_clear: string;
+  common_convert: string;
+  size_shoes_men: string;
+  size_shoes_women: string;
+  size_clothing_men: string;
+  size_clothing_women: string;
+  region_eu: string;
+  region_us: string;
+  region_uk: string;
   error_invalid_amount: string;
   error_invalid_currency: string;
   error_unsupported_language: string;
+  error_rate_not_available: string;
+  rates_updated_at: string;
+  rates_refresh: string;
+  rates_refreshing: string;
+  rates_unknown: string;
   offline_notice: string;
+  currencies_pinned: string;
+  currencies_all: string;
+  pin_add: string;
+  pin_remove: string;
+  pin_full: string;
+  save_favorite: string;
+  note_text_placeholder: string;
+  note_location_placeholder: string;
+  notes_full: string;
+  favorites_empty: string;
+  notes_empty: string;
+  history_empty: string;
 }
 
 export type TranslationKey = keyof Translations;

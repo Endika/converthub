@@ -21,7 +21,8 @@ const rates: Record<string, number> = {
 const provider: ExchangeRateProviderPort = {
   getRate(currency: CurrencyCode): Result<number, RateNotAvailableError> {
     const rate = rates[currency.value];
-    if (rate === undefined) return err(new RateNotAvailableError(currency.value));
+    if (rate === undefined)
+      return err(new RateNotAvailableError(currency.value));
     return ok(rate);
   },
 };
@@ -74,7 +75,8 @@ describe('MoneyConversionService', () => {
     const service = new MoneyConversionService(empty);
     const result = service.convert(Money.fromTrusted(10, USD), EUR);
     expect(isErr(result)).toBe(true);
-    if (isErr(result)) expect(result.error).toBeInstanceOf(RateNotAvailableError);
+    if (isErr(result))
+      expect(result.error).toBeInstanceOf(RateNotAvailableError);
   });
 
   it('returns RateNotAvailableError when target rate is missing', () => {

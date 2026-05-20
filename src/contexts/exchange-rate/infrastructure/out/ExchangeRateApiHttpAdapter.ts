@@ -1,8 +1,4 @@
-import {
-  err,
-  ok,
-  type Result,
-} from '../../../../shared-kernel/domain/Result';
+import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
 import { ExchangeRateFetchError } from '../../domain/errors/ExchangeRateFetchError';
 import type { ExchangeRateApiPort } from '../../domain/ports/out/ExchangeRateApiPort';
 

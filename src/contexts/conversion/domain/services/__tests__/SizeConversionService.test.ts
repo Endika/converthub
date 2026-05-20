@@ -8,10 +8,7 @@ describe('SizeConversionService', () => {
   const service = new SizeConversionService();
 
   it('converts EU 42 men shoes to US 8.5', () => {
-    const r = service.convert(
-      Size.fromTrusted('42', 'shoes_men', 'eu'),
-      'us',
-    );
+    const r = service.convert(Size.fromTrusted('42', 'shoes_men', 'eu'), 'us');
     expect(isOk(r)).toBe(true);
     if (isOk(r)) expect(r.value.label).toBe('8.5');
   });
@@ -33,10 +30,7 @@ describe('SizeConversionService', () => {
   });
 
   it('returns InvalidSizeError when label is not in the table', () => {
-    const r = service.convert(
-      Size.fromTrusted('999', 'shoes_men', 'eu'),
-      'us',
-    );
+    const r = service.convert(Size.fromTrusted('999', 'shoes_men', 'eu'), 'us');
     expect(isErr(r)).toBe(true);
     if (isErr(r)) expect(r.error).toBeInstanceOf(InvalidSizeError);
   });

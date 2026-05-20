@@ -23,7 +23,9 @@ describe('WeightConversionService', () => {
   it('converts via grams base across units', () => {
     expect(service.convert(Weight.fromTrusted(1, 'kg'), 'g').value).toBe(1000);
     expect(service.convert(Weight.fromTrusted(1, 't'), 'kg').value).toBe(1000);
-    expect(service.convert(Weight.fromTrusted(16, 'oz'), 'lb').value).toBeCloseTo(1, 4);
+    expect(
+      service.convert(Weight.fromTrusted(16, 'oz'), 'lb').value,
+    ).toBeCloseTo(1, 4);
   });
 
   it('is bidirectional', () => {

@@ -1,8 +1,4 @@
-import {
-  err,
-  ok,
-  type Result,
-} from '../../../../shared-kernel/domain/Result';
+import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
 import { InvalidSizeError } from '../errors/InvalidSizeError';
 import { SIZE_TABLES, type SizeRegion } from '../model/catalogs/sizes';
 import { Size } from '../model/Size';

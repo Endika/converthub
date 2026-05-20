@@ -1,5 +1,12 @@
 export const VOLUME_UNITS = [
-  'l', 'ml', 'gal_us', 'gal_uk', 'floz_us', 'floz_uk', 'cup_us', 'pt_us',
+  'l',
+  'ml',
+  'gal_us',
+  'gal_uk',
+  'floz_us',
+  'floz_uk',
+  'cup_us',
+  'pt_us',
 ] as const;
 
 export type VolumeUnit = (typeof VOLUME_UNITS)[number];

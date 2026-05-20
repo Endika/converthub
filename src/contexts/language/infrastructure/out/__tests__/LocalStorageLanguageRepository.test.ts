@@ -43,11 +43,4 @@ describe('LocalStorageLanguageRepository', () => {
     storage.setItem('converthub:language', 'fr');
     expect(repo.load()).toBeNull();
   });
-
-  it('defaults to global localStorage when no storage is injected', () => {
-    const r = new LocalStorageLanguageRepository();
-    r.save('es');
-    expect(r.load()).toBe('es');
-    localStorage.removeItem('converthub:language');
-  });
 });

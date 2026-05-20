@@ -1,10 +1,10 @@
 import type { DomainEvent } from './DomainEvent';
 import { Entity } from './Entity';
 
-export abstract class AggregateRoot<
+export abstract class AggregateRoot<TId, TProps extends object> extends Entity<
   TId,
-  TProps extends object,
-> extends Entity<TId, TProps> {
+  TProps
+> {
   private domainEvents: DomainEvent[] = [];
 
   protected addEvent(event: DomainEvent): void {

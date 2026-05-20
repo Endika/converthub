@@ -1,8 +1,4 @@
-import {
-  isErr,
-  ok,
-  type Result,
-} from '../../../shared-kernel/domain/Result';
+import { isErr, ok, type Result } from '../../../shared-kernel/domain/Result';
 import type { LoggerPort } from '../../../shared-kernel/ports/LoggerPort';
 import type { ExchangeRateFetchError } from '../domain/errors/ExchangeRateFetchError';
 import { ExchangeRateSnapshot } from '../domain/model/ExchangeRateSnapshot';
@@ -20,14 +16,22 @@ export class UpdateExchangeRatesUseCase implements UpdateExchangeRatesPort {
     private readonly base: string = DEFAULT_BASE,
   ) {}
 
-  async execute(): Promise<Result<ExchangeRateSnapshot, ExchangeRateFetchError>> {
+  async execute(): Promise<
+    Result<ExchangeRateSnapshot, ExchangeRateFetchError>
+  > {
     this.logger.info('Updating exchange rates', { base: this.base });
     const result = await this.api.fetchLatest(this.base);
     if (isErr(result)) {
-      this.logger.error('Failed to update rates', { reason: result.error.reason });
+      this.logger.error('Failed to update rates', {
+        reason: result.error.reason,
+      });
       return result;
     }
-    const snapshot = new ExchangeRateSnapshot(this.base, result.value, new Date());
+    const snapshot = new ExchangeRateSnapshot(
+      this.base,
+      result.value,
+      new Date(),
+    );
     this.repository.save(snapshot);
     return ok(snapshot);
   }

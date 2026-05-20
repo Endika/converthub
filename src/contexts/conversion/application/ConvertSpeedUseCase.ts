@@ -13,11 +13,7 @@ import type { SpeedConversionService } from '../domain/services/SpeedConversionS
 export class ConvertSpeedUseCase implements ConvertSpeedPort {
   constructor(private readonly service: SpeedConversionService) {}
 
-  execute(
-    value: number,
-    from: string,
-    to: string,
-  ): Result<Speed, SpeedError> {
+  execute(value: number, from: string, to: string): Result<Speed, SpeedError> {
     const source = Speed.from(value, from);
     if (isErr(source)) return source;
     if (!isSpeedUnit(to)) {

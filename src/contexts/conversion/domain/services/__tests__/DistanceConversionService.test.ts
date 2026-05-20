@@ -29,13 +29,19 @@ describe('DistanceConversionService', () => {
   });
 
   it('converts via meters base for m/cm/mm', () => {
-    expect(service.convert(Distance.fromTrusted(1, 'km'), 'm').value).toBe(1000);
+    expect(service.convert(Distance.fromTrusted(1, 'km'), 'm').value).toBe(
+      1000,
+    );
     expect(service.convert(Distance.fromTrusted(1, 'm'), 'cm').value).toBe(100);
     expect(service.convert(Distance.fromTrusted(1, 'cm'), 'mm').value).toBe(10);
   });
 
   it('converts feet, yards and nautical miles', () => {
-    expect(service.convert(Distance.fromTrusted(1, 'yd'), 'ft').value).toBeCloseTo(3, 6);
-    expect(service.convert(Distance.fromTrusted(1, 'nmi'), 'm').value).toBe(1852);
+    expect(
+      service.convert(Distance.fromTrusted(1, 'yd'), 'ft').value,
+    ).toBeCloseTo(3, 6);
+    expect(service.convert(Distance.fromTrusted(1, 'nmi'), 'm').value).toBe(
+      1852,
+    );
   });
 });

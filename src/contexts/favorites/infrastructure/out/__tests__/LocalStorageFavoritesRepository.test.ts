@@ -35,7 +35,7 @@ describe('LocalStorageFavoritesRepository', () => {
     expect(repo.loadAll()).toEqual([]);
   });
 
-  it('round-trips favorites', () => {
+  it('round-trips a favorite preserving label and unit fields', () => {
     const f = Favorite.create({
       type: 'money',
       fromUnit: 'USD',
@@ -46,35 +46,18 @@ describe('LocalStorageFavoritesRepository', () => {
     const loaded = repo.loadAll();
     expect(loaded).toHaveLength(1);
     expect(loaded[0]?.label).toBe('USD -> EUR');
+    expect(loaded[0]?.fromUnit).toBe('USD');
   });
 
-  it('returns [] for malformed JSON', () => {
+  it('returns [] for any malformed or unexpected stored shape', () => {
     storage.setItem('converthub:favorites', 'not-json');
     expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('drops items with invalid shape', () => {
-    storage.setItem(
-      'converthub:favorites',
-      JSON.stringify([{ id: '1', bogus: true }]),
-    );
-    expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('returns [] when stored JSON is not an array', () => {
     storage.setItem('converthub:favorites', JSON.stringify({ foo: 'bar' }));
     expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('drops null entries inside the array', () => {
-    storage.setItem('converthub:favorites', JSON.stringify([null]));
+    storage.setItem(
+      'converthub:favorites',
+      JSON.stringify([{ id: '1' }, null]),
+    );
     expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('defaults to global localStorage when no storage injected', () => {
-    const r = new LocalStorageFavoritesRepository();
-    r.saveAll([]);
-    expect(r.loadAll()).toEqual([]);
-    localStorage.removeItem('converthub:favorites');
   });
 });

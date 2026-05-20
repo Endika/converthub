@@ -1,8 +1,4 @@
-import {
-  isErr,
-  ok,
-  type Result,
-} from '../../../shared-kernel/domain/Result';
+import { isErr, ok, type Result } from '../../../shared-kernel/domain/Result';
 import type { UnsupportedLanguageError } from '../domain/errors/UnsupportedLanguageError';
 import { LanguageCode } from '../domain/model/LanguageCode';
 import type { ChangeLanguagePort } from '../domain/ports/in/ChangeLanguagePort';

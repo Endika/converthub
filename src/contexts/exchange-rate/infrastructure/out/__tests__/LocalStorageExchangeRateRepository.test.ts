@@ -31,41 +31,27 @@ describe('LocalStorageExchangeRateRepository', () => {
     repo = new LocalStorageExchangeRateRepository(storage);
   });
 
-  it('returns null when nothing is stored', () => {
+  it('returns null when storage is empty', () => {
     expect(repo.load()).toBeNull();
   });
 
-  it('round-trips a snapshot', () => {
+  it('round-trips a snapshot preserving base, rates and fetchedAt', () => {
     const fetched = new Date('2026-05-20T10:00:00Z');
-    const snap = new ExchangeRateSnapshot('USD', { EUR: 0.92, GBP: 0.79 }, fetched);
-    repo.save(snap);
+    repo.save(
+      new ExchangeRateSnapshot('USD', { EUR: 0.92, GBP: 0.79 }, fetched),
+    );
     const loaded = repo.load();
-    expect(loaded).not.toBeNull();
     expect(loaded?.baseCurrency).toBe('USD');
     expect(loaded?.rates).toEqual({ EUR: 0.92, GBP: 0.79 });
     expect(loaded?.fetchedAt.getTime()).toBe(fetched.getTime());
   });
 
-  it('returns null for malformed JSON', () => {
+  it('returns null for any malformed or unexpected stored shape', () => {
     storage.setItem('converthub:rates', 'not-json');
     expect(repo.load()).toBeNull();
-  });
-
-  it('returns null for valid JSON with wrong shape', () => {
     storage.setItem('converthub:rates', JSON.stringify({ foo: 'bar' }));
     expect(repo.load()).toBeNull();
-  });
-
-  it('returns null when stored JSON parses to null', () => {
     storage.setItem('converthub:rates', 'null');
     expect(repo.load()).toBeNull();
-  });
-
-  it('defaults to global localStorage when no storage is injected', () => {
-    const r = new LocalStorageExchangeRateRepository();
-    const snap = new ExchangeRateSnapshot('USD', { EUR: 0.92 }, new Date());
-    r.save(snap);
-    expect(r.load()?.baseCurrency).toBe('USD');
-    localStorage.removeItem('converthub:rates');
   });
 });

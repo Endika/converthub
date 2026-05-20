@@ -5,7 +5,11 @@ export class ExchangeRateSnapshot {
   readonly rates: RateMap;
   readonly fetchedAt: Date;
 
-  constructor(baseCurrency: string, rates: Record<string, number>, fetchedAt: Date) {
+  constructor(
+    baseCurrency: string,
+    rates: Record<string, number>,
+    fetchedAt: Date,
+  ) {
     this.baseCurrency = baseCurrency;
     this.rates = Object.freeze({ ...rates });
     this.fetchedAt = fetchedAt;

@@ -1,10 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import {
-  err,
-  isErr,
-  isOk,
-  ok,
-} from '../../../../shared-kernel/domain/Result';
+import { err, isErr, isOk, ok } from '../../../../shared-kernel/domain/Result';
 import type { LoggerPort } from '../../../../shared-kernel/ports/LoggerPort';
 import { ExchangeRateFetchError } from '../../domain/errors/ExchangeRateFetchError';
 import type { ExchangeRateApiPort } from '../../domain/ports/out/ExchangeRateApiPort';

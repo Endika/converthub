@@ -1,8 +1,4 @@
-import {
-  err,
-  ok,
-  type Result,
-} from '../../../../shared-kernel/domain/Result';
+import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
 import { RateNotFoundError } from '../errors/RateNotFoundError';
 import type { ExchangeRateRepositoryPort } from '../ports/out/ExchangeRateRepositoryPort';
 
@@ -26,5 +22,9 @@ export class ExchangeRateService {
     const snapshot = this.repository.load();
     if (snapshot === null) return true;
     return snapshot.isStale(now, this.maxAgeMs);
+  }
+
+  getLastUpdatedAt(): Date | null {
+    return this.repository.load()?.fetchedAt ?? null;
   }
 }

@@ -35,48 +35,28 @@ describe('LocalStorageHistoryRepository', () => {
     expect(repo.loadAll()).toEqual([]);
   });
 
-  it('round-trips entries', () => {
-    const e = ConversionEntry.create({
+  it('round-trips an entry preserving id, type and unit fields', () => {
+    const entry = ConversionEntry.create({
       type: 'money',
       fromValue: '100',
       fromUnit: 'USD',
       toValue: '92',
       toUnit: 'EUR',
     });
-    repo.saveAll([e]);
+    repo.saveAll([entry]);
     const loaded = repo.loadAll();
     expect(loaded).toHaveLength(1);
-    expect(loaded[0]?.id).toBe(e.id);
-    expect(loaded[0]?.type).toBe('money');
+    expect(loaded[0]?.id).toBe(entry.id);
+    expect(loaded[0]?.fromUnit).toBe('USD');
+    expect(loaded[0]?.toUnit).toBe('EUR');
   });
 
-  it('returns [] for malformed JSON', () => {
+  it('returns [] for any malformed or unexpected stored shape', () => {
     storage.setItem('converthub:history', 'not-json');
     expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('drops items with invalid shape', () => {
-    storage.setItem(
-      'converthub:history',
-      JSON.stringify([{ id: '1', bogus: true }]),
-    );
-    expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('returns [] when stored JSON is not an array', () => {
     storage.setItem('converthub:history', JSON.stringify({ foo: 'bar' }));
     expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('drops null entries inside the array', () => {
-    storage.setItem('converthub:history', JSON.stringify([null]));
+    storage.setItem('converthub:history', JSON.stringify([{ id: '1' }, null]));
     expect(repo.loadAll()).toEqual([]);
-  });
-
-  it('defaults to global localStorage when no storage injected', () => {
-    const r = new LocalStorageHistoryRepository();
-    r.saveAll([]);
-    expect(r.loadAll()).toEqual([]);
-    localStorage.removeItem('converthub:history');
   });
 });

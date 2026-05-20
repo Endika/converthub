@@ -20,9 +20,7 @@ const isValidShape = (data: unknown): data is PersistedShape => {
   );
 };
 
-export class LocalStorageExchangeRateRepository
-  implements ExchangeRateRepositoryPort
-{
+export class LocalStorageExchangeRateRepository implements ExchangeRateRepositoryPort {
   constructor(private readonly storage: Storage = localStorage) {}
 
   load(): ExchangeRateSnapshot | null {

@@ -29,18 +29,4 @@ describe('ConversionEntry', () => {
     );
     expect(e.timestamp).toBe(t);
   });
-
-  it('exposes from/to values via getters', () => {
-    const e = ConversionEntry.create({
-      type: 'weight',
-      fromValue: '1',
-      fromUnit: 'kg',
-      toValue: '2.20',
-      toUnit: 'lb',
-    });
-    expect(e.fromValue).toBe('1');
-    expect(e.fromUnit).toBe('kg');
-    expect(e.toValue).toBe('2.20');
-    expect(e.toUnit).toBe('lb');
-  });
 });

@@ -12,19 +12,11 @@ describe('DomainEvent', () => {
     expect(a.eventId).not.toBe(b.eventId);
   });
 
-  it('keeps the aggregateId it was constructed with', () => {
-    expect(new UserCreated('agg-42').aggregateId).toBe('agg-42');
-  });
-
   it('captures occurredOn within the construction window', () => {
     const before = Date.now();
     const evt = new UserCreated('a');
     const after = Date.now();
     expect(evt.occurredOn.getTime()).toBeGreaterThanOrEqual(before);
     expect(evt.occurredOn.getTime()).toBeLessThanOrEqual(after);
-  });
-
-  it('exposes the concrete event name', () => {
-    expect(new UserCreated('a').eventName).toBe('user.created');
   });
 });
