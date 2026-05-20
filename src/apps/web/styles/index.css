@@ -407,6 +407,21 @@ body {
   border-radius: var(--radius);
 }
 
+.entry-list__action--triple {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: nowrap;
+}
+
+.entry-list__action--triple > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
 .entry-list__primary {
   font-weight: 500;
 }

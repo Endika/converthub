@@ -47,8 +47,8 @@ export class HistoryList {
         : `<ul class="entry-list">${entries
             .map(
               (e) => `
-                <li class="entry-list__item entry-list__item--clickable entry-list__item--triple" data-id="${escapeHtml(e.id)}">
-                  <button type="button" class="entry-list__action" data-action="apply">
+                <li class="entry-list__item entry-list__item--clickable" data-id="${escapeHtml(e.id)}">
+                  <button type="button" class="entry-list__action entry-list__action--triple" data-action="apply">
                     <span>${escapeHtml(e.fromValue)} ${escapeHtml(e.fromUnit)}</span>
                     <span aria-hidden="true">→</span>
                     <span>${escapeHtml(e.toValue)} ${escapeHtml(e.toUnit)}</span>
