@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.5.0](https://github.com/Endika/converthub/compare/v1.4.1...v1.5.0) (2026-05-20)
+
+
+### Features
+
+* **ui:** brand icon with violet gradient and swap arrows ([495a504](https://github.com/Endika/converthub/commit/495a50431c59dd8263cf7e154bd018871d7d2688))
+* **ui:** swap from/to button in all unit converters and live result in favorites ([1b5f0d6](https://github.com/Endika/converthub/commit/1b5f0d6fd8c7d85d3d8c4225df6eb085683dc65e))
+
+
+### Bug Fixes
+
+* **ui:** history items render on a single line (flex layout for triple action) ([b30601c](https://github.com/Endika/converthub/commit/b30601c1dc6d0c6fd4d403900c07fc234a961936))
+
 ## [1.4.1](https://github.com/Endika/converthub/compare/v1.4.0...v1.4.1) (2026-05-20)
 
 
