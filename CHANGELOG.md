@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.3.0](https://github.com/Endika/converthub/compare/v1.2.0...v1.3.0) (2026-05-20)
+
+
+### Features
+
+* **ui:** clicking a favorite loads its pair into the active converter ([5eda6dd](https://github.com/Endika/converthub/commit/5eda6dd14ba09b039d7b3aea94bd984a9c4262db))
+
+
+### Bug Fixes
+
+* **ui:** responsive layout for mobile and tablet breakpoints ([83c799f](https://github.com/Endika/converthub/commit/83c799f05ec7d7cd73392d20614c64dff429494c))
+
+
+### Documentation
+
+* link live demo and align README with current stack (vitest 4, eslint 10, ts 6, PWA via vite-plugin-pwa) ([9b6be65](https://github.com/Endika/converthub/commit/9b6be651c742c17bcace0a1f43015ce5545e5c93))
+
 ## [1.2.0](https://github.com/Endika/converthub/compare/v1.1.0...v1.2.0) (2026-05-20)
 
 
