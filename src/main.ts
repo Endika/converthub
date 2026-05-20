@@ -24,9 +24,9 @@ if (exchangeRateService.needsUpdate()) {
 
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
-    const swUrl = new URL('sw.js', import.meta.env.BASE_URL).pathname;
+    const base = import.meta.env.BASE_URL;
     void navigator.serviceWorker
-      .register(swUrl, { scope: import.meta.env.BASE_URL })
+      .register(`${base}sw.js`, { scope: base })
       .catch(() => {
         /* Service worker is optional — fail silently until vite-plugin-pwa is wired. */
       });
