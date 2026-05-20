@@ -16,6 +16,7 @@ import type { GetFavoritesUseCase } from '../../../../contexts/favorites/applica
 import type { RemoveFavoriteUseCase } from '../../../../contexts/favorites/application/RemoveFavoriteUseCase';
 import type { Favorite } from '../../../../contexts/favorites/domain/model/Favorite';
 import type { AddToHistoryUseCase } from '../../../../contexts/history/application/AddToHistoryUseCase';
+import type { ConversionEntry } from '../../../../contexts/history/domain/model/ConversionEntry';
 import type { LanguageService } from '../../../../contexts/language/domain/services/LanguageService';
 import type { AddNoteUseCase } from '../../../../contexts/notes/application/AddNoteUseCase';
 import type { DeleteNoteUseCase } from '../../../../contexts/notes/application/DeleteNoteUseCase';
@@ -182,7 +183,12 @@ export class HomePage {
     this.switchTo('currency');
   }
 
-  private applyFavorite(favorite: Favorite): void {
+  private applyConversion(
+    type: Favorite['type'],
+    from: string,
+    to: string,
+    amount: number | null,
+  ): void {
     const tabByType: Record<Favorite['type'], TabKey | null> = {
       money: 'currency',
       distance: 'distance',
@@ -192,13 +198,28 @@ export class HomePage {
       speed: 'speed',
       size: null,
     };
-    const tab = tabByType[favorite.type];
+    const tab = tabByType[type];
     if (tab === null) return;
     this.switchTo(tab);
     const conv = this.currentConverter as unknown as {
-      setPair?: (from: string, to: string) => void;
+      setPair?: (from: string, to: string, amount?: number | null) => void;
     } | null;
-    conv?.setPair?.(favorite.fromUnit, favorite.toUnit);
+    conv?.setPair?.(from, to, amount);
+  }
+
+  private applyFavorite(favorite: Favorite): void {
+    this.applyConversion(
+      favorite.type,
+      favorite.fromUnit,
+      favorite.toUnit,
+      favorite.amount,
+    );
+  }
+
+  private applyHistoryEntry(entry: ConversionEntry): void {
+    const parsed = Number(entry.fromValue);
+    const amount = Number.isFinite(parsed) ? parsed : null;
+    this.applyConversion(entry.type, entry.fromUnit, entry.toUnit, amount);
   }
 
   private switchSide(key: SidePanelKey): void {
@@ -214,6 +235,7 @@ export class HomePage {
         language,
         this.container.get(SERVICES.getHistoryUseCase),
         this.container.get(SERVICES.clearHistoryUseCase),
+        { onApply: (entry) => this.applyHistoryEntry(entry) },
       );
     } else if (key === 'favorites') {
       this.currentSideList = new FavoritesList(

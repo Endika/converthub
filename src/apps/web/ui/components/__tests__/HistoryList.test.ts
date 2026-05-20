@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ClearHistoryUseCase } from '../../../../../contexts/history/application/ClearHistoryUseCase';
 import { GetHistoryUseCase } from '../../../../../contexts/history/application/GetHistoryUseCase';
 import { ConversionEntry } from '../../../../../contexts/history/domain/model/ConversionEntry';
@@ -74,5 +74,21 @@ describe('HistoryList', () => {
     repo.saveAll([entry('USD', 'EUR'), entry('GBP', 'JPY')]);
     list.refresh();
     expect(root.querySelectorAll('.entry-list__item')).toHaveLength(2);
+  });
+
+  it('emits onApply with the clicked entry', () => {
+    const onApply = vi.fn();
+    const service = new HistoryService(buildRepo([entry('USD', 'JPY')]));
+    new HistoryList(
+      root,
+      language,
+      new GetHistoryUseCase(service),
+      new ClearHistoryUseCase(service),
+      { onApply },
+    );
+    root.querySelector<HTMLButtonElement>('[data-action="apply"]')?.click();
+    expect(onApply).toHaveBeenCalledTimes(1);
+    expect(onApply.mock.calls[0]?.[0]?.fromUnit).toBe('USD');
+    expect(onApply.mock.calls[0]?.[0]?.toUnit).toBe('JPY');
   });
 });

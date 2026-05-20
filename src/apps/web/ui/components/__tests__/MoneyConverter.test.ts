@@ -461,20 +461,38 @@ describe('MoneyConverter', () => {
       expect(btn?.hidden).toBe(true);
     });
 
-    it('stores a favorite with the current currency pair when clicked', () => {
+    it('stores a favorite with the current currency pair and amount when clicked', () => {
       const onFavoriteSaved = vi.fn();
       const { root, favoritesRepo } = mount({
         callbacks: { onFavoriteSaved },
       });
-      submitOnce(root);
+      submitOnce(root, '100');
       root
         .querySelector<HTMLButtonElement>('[data-action="save-favorite"]')
         ?.click();
       expect(favoritesRepo.loadAll()).toHaveLength(1);
-      expect(favoritesRepo.loadAll()[0]?.label).toBe('USD → EUR');
-      expect(favoritesRepo.loadAll()[0]?.fromUnit).toBe('USD');
-      expect(favoritesRepo.loadAll()[0]?.toUnit).toBe('EUR');
+      const fav = favoritesRepo.loadAll()[0];
+      expect(fav?.label).toBe('100 USD → EUR');
+      expect(fav?.fromUnit).toBe('USD');
+      expect(fav?.toUnit).toBe('EUR');
+      expect(fav?.amount).toBe(100);
       expect(onFavoriteSaved).toHaveBeenCalledTimes(1);
+    });
+
+    it('stores a favorite without amount when the input is invalid', () => {
+      const { root, favoritesRepo } = mount();
+      submitOnce(root, '100'); // submit valid first so button shows
+      const amount = root.querySelector<HTMLInputElement>(
+        'input[name="amount"]',
+      );
+      if (amount === null) throw new Error('amount input missing');
+      amount.value = '';
+      root
+        .querySelector<HTMLButtonElement>('[data-action="save-favorite"]')
+        ?.click();
+      const fav = favoritesRepo.loadAll()[0];
+      expect(fav?.label).toBe('USD → EUR');
+      expect(fav?.amount).toBeNull();
     });
   });
 

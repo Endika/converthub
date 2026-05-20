@@ -21,6 +21,7 @@ const sample = (id: string): Favorite =>
     fromUnit: 'USD',
     toUnit: 'EUR',
     label: id,
+    amount: null,
     createdAt: new Date(),
   });
 

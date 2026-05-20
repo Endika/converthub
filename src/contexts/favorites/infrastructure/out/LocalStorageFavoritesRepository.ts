@@ -13,6 +13,7 @@ interface PersistedFavorite {
   fromUnit: string;
   toUnit: string;
   label: string;
+  amount?: number | null;
   createdAt: number;
 }
 
@@ -29,7 +30,10 @@ const isPersistedFavorite = (data: unknown): data is PersistedFavorite => {
     typeof f.fromUnit === 'string' &&
     typeof f.toUnit === 'string' &&
     typeof f.label === 'string' &&
-    typeof f.createdAt === 'number'
+    typeof f.createdAt === 'number' &&
+    (f.amount === undefined ||
+      f.amount === null ||
+      typeof f.amount === 'number')
   );
 };
 
@@ -39,6 +43,7 @@ const toEntity = (p: PersistedFavorite): Favorite =>
     fromUnit: p.fromUnit,
     toUnit: p.toUnit,
     label: p.label,
+    amount: p.amount ?? null,
     createdAt: new Date(p.createdAt),
   });
 
@@ -48,6 +53,7 @@ const toPersisted = (f: Favorite): PersistedFavorite => ({
   fromUnit: f.fromUnit,
   toUnit: f.toUnit,
   label: f.label,
+  amount: f.amount,
   createdAt: f.createdAt.getTime(),
 });
 

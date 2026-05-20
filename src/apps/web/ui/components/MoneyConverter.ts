@@ -60,11 +60,14 @@ export class MoneyConverter {
     this.unsubscribe();
   }
 
-  setPair(from: string, to: string): void {
+  setPair(from: string, to: string, amount?: number | null): void {
     const optionExists = (sel: HTMLSelectElement, value: string): boolean =>
       Array.from(sel.options).some((o) => o.value === value);
     if (optionExists(this.fromSelect, from)) this.fromSelect.value = from;
     if (optionExists(this.toSelect, to)) this.toSelect.value = to;
+    if (amount !== undefined && amount !== null && Number.isFinite(amount)) {
+      this.amountInput.value = String(amount);
+    }
     this.refreshHints();
     this.refreshPinButtons();
   }
@@ -339,9 +342,18 @@ export class MoneyConverter {
   private saveAsFavorite(): void {
     const from = this.fromSelect.value;
     const to = this.toSelect.value;
-    const label = `${from} → ${to}`;
+    const parsed = Number(this.amountInput.value);
+    const amount = Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+    const label =
+      amount === null ? `${from} → ${to}` : `${amount} ${from} → ${to}`;
     const result = this.deps.addFavorite.execute(
-      Favorite.create({ type: 'money', fromUnit: from, toUnit: to, label }),
+      Favorite.create({
+        type: 'money',
+        fromUnit: from,
+        toUnit: to,
+        label,
+        amount,
+      }),
     );
     if (isErr(result)) {
       this.resultEl.textContent = this.languageService.translate('pin_full');

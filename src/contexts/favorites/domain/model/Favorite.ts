@@ -17,6 +17,7 @@ export interface FavoriteProps {
   fromUnit: string;
   toUnit: string;
   label: string;
+  amount: number | null;
   createdAt: Date;
 }
 
@@ -26,10 +27,16 @@ export class Favorite extends Entity<string, FavoriteProps> {
   }
 
   static create(
-    props: Omit<FavoriteProps, 'createdAt'>,
+    props: Omit<FavoriteProps, 'createdAt' | 'amount'> & {
+      amount?: number | null;
+    },
     now: Date = new Date(),
   ): Favorite {
-    return new Favorite(crypto.randomUUID(), { ...props, createdAt: now });
+    return new Favorite(crypto.randomUUID(), {
+      ...props,
+      amount: props.amount ?? null,
+      createdAt: now,
+    });
   }
 
   get type(): FavoriteType {
@@ -46,6 +53,10 @@ export class Favorite extends Entity<string, FavoriteProps> {
 
   get label(): string {
     return this.props.label;
+  }
+
+  get amount(): number | null {
+    return this.props.amount;
   }
 
   get createdAt(): Date {
