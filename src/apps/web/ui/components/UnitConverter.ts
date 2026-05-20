@@ -6,6 +6,7 @@ import {
 import type { LanguageService } from '../../../../contexts/language/domain/services/LanguageService';
 import type { TranslationKey } from '../../../../contexts/language/domain/translations/Translations';
 import { isOk, type Result } from '../../../../shared-kernel/domain/Result';
+import { formatAmount } from '../format';
 
 export interface UnitConversionOutput {
   readonly value: number;
@@ -117,15 +118,16 @@ export class UnitConverter {
       return;
     }
 
-    const value = result.value.value.toFixed(4);
+    const amountDisplay = formatAmount(amount);
+    const value = formatAmount(result.value.value);
     const fromLabel = this.displayLabel(this.fromSelect.value);
     const toLabel = this.displayLabel(this.toSelect.value);
-    this.resultEl.textContent = `${amount} ${fromLabel} = ${value} ${toLabel}`;
+    this.resultEl.textContent = `${amountDisplay} ${fromLabel} = ${value} ${toLabel}`;
 
     this.addToHistoryUseCase.execute(
       ConversionEntry.create({
         type: this.config.type,
-        fromValue: String(amount),
+        fromValue: amountDisplay,
         fromUnit: this.fromSelect.value,
         toValue: value,
         toUnit: this.toSelect.value,

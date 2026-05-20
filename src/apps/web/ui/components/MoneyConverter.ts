@@ -12,6 +12,7 @@ import type { GetPinnedCurrenciesUseCase } from '../../../../contexts/pinned-cur
 import type { PinCurrencyUseCase } from '../../../../contexts/pinned-currencies/application/PinCurrencyUseCase';
 import type { UnpinCurrencyUseCase } from '../../../../contexts/pinned-currencies/application/UnpinCurrencyUseCase';
 import { isErr, isOk } from '../../../../shared-kernel/domain/Result';
+import { formatAmount } from '../format';
 
 export interface MoneyConverterDeps {
   convertMoney: ConvertMoneyUseCase;
@@ -66,7 +67,7 @@ export class MoneyConverter {
     if (optionExists(this.fromSelect, from)) this.fromSelect.value = from;
     if (optionExists(this.toSelect, to)) this.toSelect.value = to;
     if (amount !== undefined && amount !== null && Number.isFinite(amount)) {
-      this.amountInput.value = String(amount);
+      this.amountInput.value = formatAmount(amount);
     }
     this.refreshHints();
     this.refreshPinButtons();
@@ -316,14 +317,15 @@ export class MoneyConverter {
       return;
     }
 
-    const converted = result.value.amount.toFixed(4);
-    this.resultEl.textContent = `${amount} ${this.fromSelect.value} = ${converted} ${this.toSelect.value}`;
+    const amountDisplay = formatAmount(amount);
+    const converted = formatAmount(result.value.amount);
+    this.resultEl.textContent = `${amountDisplay} ${this.fromSelect.value} = ${converted} ${this.toSelect.value}`;
     this.toggleSaveFavorite(true);
 
     this.deps.addToHistory.execute(
       ConversionEntry.create({
         type: 'money',
-        fromValue: String(amount),
+        fromValue: amountDisplay,
         fromUnit: this.fromSelect.value,
         toValue: converted,
         toUnit: this.toSelect.value,
@@ -345,7 +347,9 @@ export class MoneyConverter {
     const parsed = Number(this.amountInput.value);
     const amount = Number.isFinite(parsed) && parsed > 0 ? parsed : null;
     const label =
-      amount === null ? `${from} → ${to}` : `${amount} ${from} → ${to}`;
+      amount === null
+        ? `${from} → ${to}`
+        : `${formatAmount(amount)} ${from} → ${to}`;
     const result = this.deps.addFavorite.execute(
       Favorite.create({
         type: 'money',
