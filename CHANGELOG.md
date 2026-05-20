@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/Endika/converthub/compare/v1.5.0...v1.5.1) (2026-05-20)
+
+
+### Bug Fixes
+
+* **ui:** replace curved swap icon with straight horizontal arrows ([317117e](https://github.com/Endika/converthub/commit/317117e8f7db6412797088d34f9808be24cd8755))
+
 ## [1.5.0](https://github.com/Endika/converthub/compare/v1.4.1...v1.5.0) (2026-05-20)
 
 
