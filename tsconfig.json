@@ -31,7 +31,7 @@
       "@apps/*": ["src/apps/*"]
     },
 
-    "types": ["vite/client"]
+    "types": ["vite/client", "vite-plugin-pwa/client"]
   },
   "include": ["src/**/*", "tests/**/*", "*.config.ts"],
   "exclude": [
@@ -39,7 +39,6 @@
     "dist",
     "coverage",
     "playwright-report",
-    "test-results",
-    "src/sw.ts"
+    "test-results"
   ]
 }
