@@ -23,12 +23,11 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
 
-    "baseUrl": ".",
     "paths": {
-      "@contexts/*": ["src/contexts/*"],
-      "@shared-kernel/*": ["src/shared-kernel/*"],
-      "@shared-infrastructure/*": ["src/shared-infrastructure/*"],
-      "@apps/*": ["src/apps/*"]
+      "@contexts/*": ["./src/contexts/*"],
+      "@shared-kernel/*": ["./src/shared-kernel/*"],
+      "@shared-infrastructure/*": ["./src/shared-infrastructure/*"],
+      "@apps/*": ["./src/apps/*"]
     },
 
     "types": ["vite/client", "vite-plugin-pwa/client"]

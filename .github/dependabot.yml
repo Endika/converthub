@@ -9,6 +9,15 @@ updates:
       prefix: 'chore(deps)'
       prefix-development: 'chore(deps-dev)'
     groups:
+      vitest-suite:
+        applies-to: version-updates
+        patterns:
+          - 'vitest'
+          - '@vitest/*'
+      typescript-eslint:
+        applies-to: version-updates
+        patterns:
+          - '@typescript-eslint/*'
       minor-and-patch:
         applies-to: version-updates
         update-types:
