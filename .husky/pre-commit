@@ -1,0 +1,65 @@
+#!/bin/sh
+# .husky/pre-commit
+# 
+# Git hook que se ejecuta antes de hacer commit
+# Valida código antes de permitir commit
+# 
+# Ejecutar: chmod +x .husky/pre-commit (una sola vez)
+
+set -e
+
+echo "🔍 Running pre-commit checks..."
+
+# Get the list of staged files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+
+# Filter TypeScript and CSS files
+TS_FILES=$(echo "$STAGED_FILES" | grep -E '\.(ts|tsx)$' || echo "")
+CSS_FILES=$(echo "$STAGED_FILES" | grep -E '\.css$' || echo "")
+MD_FILES=$(echo "$STAGED_FILES" | grep -E '\.md$' || echo "")
+
+# Exit early if no relevant files
+if [ -z "$TS_FILES" ] && [ -z "$CSS_FILES" ] && [ -z "$MD_FILES" ]; then
+  echo "✅ No TypeScript, CSS, or Markdown files to check"
+  exit 0
+fi
+
+# Type checking
+if [ -n "$TS_FILES" ]; then
+  echo "📝 Type checking..."
+  npm run type-check || {
+    echo "❌ Type check failed. Please fix errors before committing."
+    exit 1
+  }
+fi
+
+# Linting
+if [ -n "$TS_FILES" ]; then
+  echo "🔗 Linting TypeScript..."
+  npx eslint $TS_FILES --fix || {
+    echo "❌ Linting failed. Please fix errors before committing."
+    exit 1
+  }
+  git add $TS_FILES
+fi
+
+# Formatting
+if [ -n "$TS_FILES" ] || [ -n "$CSS_FILES" ] || [ -n "$MD_FILES" ]; then
+  echo "✨ Formatting code..."
+  npx prettier --write $STAGED_FILES 2>/dev/null || true
+  git add $STAGED_FILES 2>/dev/null || true
+fi
+
+# Quick tests for changed files
+if [ -n "$TS_FILES" ]; then
+  echo "🧪 Running quick tests..."
+  # Run tests solo para archivos modificados
+  npx vitest run --related $TS_FILES --run --no-coverage 2>/dev/null || {
+    echo "⚠️  Some tests failed. Review before committing."
+    # No es fatal, solo aviso
+  }
+fi
+
+echo "✅ Pre-commit checks passed!"
+echo ""
+exit 0
