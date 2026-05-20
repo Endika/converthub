@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.2.0](https://github.com/Endika/converthub/compare/v1.1.0...v1.2.0) (2026-05-20)
+
+
+### Features
+
+* **pwa:** integrate vite-plugin-pwa with workbox for installable offline-first app ([379c8f5](https://github.com/Endika/converthub/commit/379c8f59db58fa5eec5715566e7fa3bfcd80a5cb))
+
+
+### Bug Fixes
+
+* **deps:** align vitest 4 across coverage/ui, group related deps in dependabot ([e346268](https://github.com/Endika/converthub/commit/e3462687660b32778ea648f9699f2233fc49fcc4))
+
+
+### Chores
+
+* **ci:** bump actions/checkout from 4 to 6 ([1693ee1](https://github.com/Endika/converthub/commit/1693ee1554db0d9c7ae9d7cd88d2fddc51d49fe2))
+* **ci:** bump actions/configure-pages from 5 to 6 ([3843acd](https://github.com/Endika/converthub/commit/3843acd741b15d909b3db35c0d47349f46428ded))
+* **ci:** bump actions/deploy-pages from 4 to 5 ([323fedd](https://github.com/Endika/converthub/commit/323fedd930ca37272be4766a43e23e71c14935dc))
+* **ci:** bump actions/download-artifact from 4 to 8 ([927f572](https://github.com/Endika/converthub/commit/927f572d60e6b91654b1b0ff6247b18e25ff5b7e))
+* **ci:** bump actions/setup-node from 4 to 6 ([56c37b1](https://github.com/Endika/converthub/commit/56c37b12feebfe56336de80e720a8062766213e3))
+* **ci:** bump actions/upload-artifact from 4 to 7 ([97bd96a](https://github.com/Endika/converthub/commit/97bd96aed659ac8d33bfac48f18fbfd91b6b75df))
+* **ci:** bump actions/upload-pages-artifact from 3 to 5 ([d5489d6](https://github.com/Endika/converthub/commit/d5489d682b79a5170443d60d5d8ad7c61c78928a))
+* **ci:** bump googleapis/release-please-action from 4 to 5 ([7af5eae](https://github.com/Endika/converthub/commit/7af5eaeb9627b0c62cb37f56d683df1e8ac446cc))
+* **deps-dev:** bump @types/node from 22.19.19 to 25.9.1 ([144a115](https://github.com/Endika/converthub/commit/144a1151a14f5d3b34033d1a671b76da76707b57))
+* **deps-dev:** bump @vitest/coverage-v8 from 3.2.4 to 4.1.7 ([481de7e](https://github.com/Endika/converthub/commit/481de7e6601c91258488175e3e0bfddba1a5a290))
+* **deps-dev:** bump @vitest/ui from 3.2.4 to 4.1.7 ([5f0c096](https://github.com/Endika/converthub/commit/5f0c096b7e2837b664cd64374231f27d345c518e))
+* **deps-dev:** bump eslint from 9.39.4 to 10.4.0 ([bfb32ba](https://github.com/Endika/converthub/commit/bfb32ba7a22a862fb2da34b562f4ea4999e9b55c))
+* **deps-dev:** bump happy-dom from 15.11.7 to 20.9.0 ([40c51a4](https://github.com/Endika/converthub/commit/40c51a43f709f20a6f9f21ce2d9c08a4df3a5612))
+* **deps-dev:** bump typescript from 5.9.3 to 6.0.3 ([30cb71a](https://github.com/Endika/converthub/commit/30cb71ab99ab98afae5ec3ac0a6282726622c45f))
+* **deps-dev:** bump vitest from 3.2.4 to 4.1.7 ([ec50896](https://github.com/Endika/converthub/commit/ec508965ec2e0f2a9f8b87f7ded50ba74926764a))
+* exempt release-please artifacts from prettier ([6e02977](https://github.com/Endika/converthub/commit/6e029774bf4754adf6753f7adcaf0f19e8971eb7))
+
 ## [1.1.0](https://github.com/Endika/converthub/compare/v1.0.0...v1.1.0) (2026-05-20)
 
 
