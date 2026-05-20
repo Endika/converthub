@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/Endika/converthub/compare/v1.4.0...v1.4.1) (2026-05-20)
+
+
+### Bug Fixes
+
+* **ui:** cap displayed amounts to 3 decimals (no trailing zeros) everywhere ([7021fe9](https://github.com/Endika/converthub/commit/7021fe913d61aeaff8039cf046422fc305b90b75))
+
 ## [1.4.0](https://github.com/Endika/converthub/compare/v1.3.0...v1.4.0) (2026-05-20)
 
 
