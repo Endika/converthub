@@ -13,6 +13,9 @@ export default defineConfig({
       exclude: [
         '**/*.config.*',
         '**/*.d.ts',
+        '**/__tests__/**',
+        'src/**/ports/**',
+        'src/main.ts',
         'src/apps/web/main.ts',
         'src/sw.ts',
         'src/**/index.ts',
