@@ -205,6 +205,9 @@ export class TipCalculator {
     }
     const result = this.useCase.execute(input);
     if (!isOk(result)) {
+      this.writeResultRow('tip', null, null);
+      this.writeResultRow('total', null, null);
+      this.writeResultRow('per-person', null, null);
       this.setHint('');
       return;
     }
@@ -241,10 +244,13 @@ export class TipCalculator {
           : `${formatAmount(local)} ${this.billCurrencySelect.value}`;
     }
     if (homeEl !== null) {
-      homeEl.textContent =
-        home === null
-          ? EMPTY_PLACEHOLDER
-          : `${formatAmount(home)} ${this.homeCurrencySelect.value}`;
+      if (local === null && home === null) {
+        homeEl.textContent = '';
+      } else if (home === null) {
+        homeEl.textContent = EMPTY_PLACEHOLDER;
+      } else {
+        homeEl.textContent = `${formatAmount(home)} ${this.homeCurrencySelect.value}`;
+      }
     }
   }
 

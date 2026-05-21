@@ -79,6 +79,15 @@ describe('TipCalculator (UI)', () => {
     expect(total.textContent).toContain('—');
   });
 
+  it('leaves the home column blank when the bill input is empty', () => {
+    const { root } = makeComponent();
+    const homeTotal = root.querySelector(
+      '[data-result-home="total"]',
+    ) as HTMLElement;
+    // No user input — home column must be empty, NOT '—'.
+    expect(homeTotal.textContent ?? '').not.toContain('—');
+  });
+
   it('updates the default percent when the bill currency changes (only before user touches it)', () => {
     const { root } = makeComponent();
     const billCurrency = root.querySelector(
@@ -90,9 +99,7 @@ describe('TipCalculator (UI)', () => {
     const activeUsd = root.querySelector('[data-percent].is-active');
     expect(activeUsd?.getAttribute('data-percent')).toBe('18');
 
-    const five = root.querySelector(
-      '[data-percent="5"]',
-    ) as HTMLButtonElement;
+    const five = root.querySelector('[data-percent="5"]') as HTMLButtonElement;
     five.click();
 
     billCurrency.value = 'JPY';
