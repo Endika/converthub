@@ -1,77 +1,50 @@
 # ConvertHub
 
-[**Live demo →**](https://endika.github.io/converthub/)
+**The offline converter for travellers.** Pay the right tip, know what 5,000 yen actually costs you in euros, and figure out if you fit a size 8 in Italy — without burning your data roaming.
 
-Offline-first PWA to convert currencies, units and clothing/shoe sizes. Multi-language (EN / ES / EU), no ads, no tracking.
+[**Try it now →**](https://endika.github.io/converthub/)
 
-Built with TypeScript (strict), Vite, Vitest and Playwright. Architecture: **Hexagonal (Ports & Adapters) + tactical DDD + SOLID**.
+Install it on your phone or laptop and it just works on the plane, in the metro, anywhere. No account. No ads. No tracking.
 
-## Stack
+## What it does
 
-- TypeScript 6 (strict)
-- Vite 8 + vanilla DOM (no framework)
-- Vitest 4 + happy-dom (unit / integration)
-- Playwright (E2E)
-- ESLint 10 + Prettier 3
-- vite-plugin-pwa (Workbox) — installable PWA, offline cache
-- GitHub Actions CI/CD + GitHub Pages deploy
+- **Currencies.** All 160+, with the last rates cached so you don't need signal at the restaurant.
+- **Tip calculator.** Type the bill in the local currency, see tip and total in both that currency and yours. Defaults adjust per country — USA 18%, Japan 0%, Spain 10%, and so on. Split between any number of people, round up the total if you want.
+- **Distance, weight, volume, temperature, speed.** The everyday conversions you actually need abroad.
+- **Clothing & shoe sizes.** EU / US / UK for men, women and kids — the part of travel nobody tells you about until you're in the fitting room.
+- **Travel notes.** Jot down "the café near Plaza Mayor" with a location attached.
+- **Favorites & history.** Pin the conversions you do most often, replay the last 20.
+- **Three languages.** English, Spanish, Basque.
 
-## Architecture
+## Why it might be your travel app
 
-```
-src/
-├── contexts/                 # Bounded Contexts (DDD)
-│   ├── conversion/           # Money, Distance, Weight, Volume, Temperature, Speed, Size
-│   ├── exchange-rate/        # API client + cache + freshness
-│   ├── language/             # i18n EN/ES/EU + Observer
-│   ├── history/              # 20 last conversions (FIFO)
-│   ├── favorites/            # 10 favorites max
-│   ├── notes/                # 50 travel notes max
-│   └── pinned-currencies/    # User-pinned currency codes, shown first
-├── shared-kernel/            # ValueObject, Entity, AggregateRoot, Result, ports
-├── shared-infrastructure/    # ConsoleLogger
-├── apps/web/                 # Composition root (DI container) + UI components
-└── main.ts                   # Entry point
-```
+- **Offline by design.** Cached rates, full app shell. The currency tab is the only feature that benefits from internet — and even that runs on whatever rates you last loaded.
+- **Installable.** Open it in your browser, then "Add to Home Screen" on mobile or "Install" on desktop. Behaves like a native app, takes about 100 KB.
+- **No tracking, no ads, no account.** The source code is here, end to end.
+- **Free and open source.** MIT licensed.
 
-Each Bounded Context is a mini-hexagon:
+## Install on your device
 
-```
-domain/             # Pure business logic, zero outbound deps
-├── model/          # Entities + Value Objects
-├── ports/in/       # Use case interfaces (driving)
-├── ports/out/      # Repository / provider interfaces (driven)
-├── services/       # Domain services
-└── errors/
+1. Open [the live app](https://endika.github.io/converthub/) on your phone or computer.
+2. Add it to your home screen, or install it as an app — your browser will offer the option from the address bar or the share menu.
+3. Open it like any other app, online or offline.
 
-application/        # Use case implementations (implement ports/in)
-infrastructure/
-├── in/             # Driving adapters (UI → use cases)
-└── out/            # Driven adapters (localStorage, HTTP)
-```
+---
 
-The **dependency rule** is enforced by `no-restricted-imports` in ESLint: `domain/` cannot import from `application/` or `infrastructure/`; `application/` cannot import from `infrastructure/`.
+## For developers
 
-## Scripts
+TypeScript (strict) + Vite + Vitest + Playwright. Vanilla DOM, no framework. Hexagonal (Ports & Adapters) layout with bounded contexts under `src/contexts/` and a thin DI container at `src/apps/web/di/`. The dependency rule (`domain ← application ← infrastructure`) is enforced via `no-restricted-imports`.
 
 ```bash
+npm install
 npm run dev             # dev server
-npm run build           # type-check + production build (+ Workbox SW)
-npm run preview         # serve dist/
-npm run type-check      # tsc --noEmit
-npm run lint            # eslint .
-npm run format          # prettier --write
-npm run format:check    # prettier --check
-npm test                # vitest run
-npm run test:coverage   # vitest + coverage thresholds (80/75/80/80)
-npm run e2e             # playwright tests
+npm test                # unit + integration (vitest)
+npm run e2e             # end-to-end (playwright)
+npm run build           # production build with service worker
 ```
 
-## Requirements
-
-- Node ≥ 20
-- npm ≥ 9
+Requires Node ≥ 20, npm ≥ 9.
 
 ## License
 
-MIT
+MIT.
