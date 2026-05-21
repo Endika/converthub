@@ -8,6 +8,7 @@ export interface Translations {
   nav_temperature: string;
   nav_speed: string;
   nav_sizes: string;
+  nav_tip: string;
   nav_history: string;
   nav_favorites: string;
   nav_notes: string;
@@ -26,6 +27,17 @@ export interface Translations {
   region_eu: string;
   region_us: string;
   region_uk: string;
+  tip_bill: string;
+  tip_bill_currency: string;
+  tip_percent: string;
+  tip_percent_custom: string;
+  tip_people: string;
+  tip_round_up: string;
+  tip_home_currency: string;
+  tip_amount: string;
+  tip_total: string;
+  tip_per_person: string;
+  tip_no_rate: string;
   error_invalid_amount: string;
   error_invalid_currency: string;
   error_unsupported_language: string;
