@@ -45,6 +45,9 @@ import { PinCurrencyUseCase } from '../../../contexts/pinned-currencies/applicat
 import { UnpinCurrencyUseCase } from '../../../contexts/pinned-currencies/application/UnpinCurrencyUseCase';
 import { PinningService } from '../../../contexts/pinned-currencies/domain/services/PinningService';
 import { LocalStoragePinnedCurrenciesRepository } from '../../../contexts/pinned-currencies/infrastructure/out/LocalStoragePinnedCurrenciesRepository';
+import { CalculateTipUseCase } from '../../../contexts/tipping/application/CalculateTipUseCase';
+import { TipCalculator } from '../../../contexts/tipping/domain/services/TipCalculator';
+import { ExchangeRateConverterAdapter } from '../../../contexts/tipping/infrastructure/out/ExchangeRateConverterAdapter';
 import { ConsoleLogger } from '../../../shared-infrastructure/logging/ConsoleLogger';
 import { Container } from './Container';
 
@@ -104,6 +107,10 @@ export const SERVICES = {
   pinCurrencyUseCase: 'pinCurrencyUseCase',
   unpinCurrencyUseCase: 'unpinCurrencyUseCase',
   getPinnedCurrenciesUseCase: 'getPinnedCurrenciesUseCase',
+  // tipping
+  tipCalculator: 'tipCalculator',
+  rateConverter: 'rateConverter',
+  calculateTipUseCase: 'calculateTipUseCase',
 } as const;
 
 const resolveInitialLanguage = (c: Container): LanguageCode => {
@@ -335,6 +342,21 @@ export const buildContainer = (): Container => {
   c.registerSingleton(
     SERVICES.getPinnedCurrenciesUseCase,
     () => new GetPinnedCurrenciesUseCase(c.get(SERVICES.pinningService)),
+  );
+
+  // tipping
+  c.registerSingleton(SERVICES.tipCalculator, () => new TipCalculator());
+  c.registerSingleton(
+    SERVICES.rateConverter,
+    () => new ExchangeRateConverterAdapter(c.get(SERVICES.exchangeRateService)),
+  );
+  c.registerSingleton(
+    SERVICES.calculateTipUseCase,
+    () =>
+      new CalculateTipUseCase(
+        c.get(SERVICES.tipCalculator),
+        c.get(SERVICES.rateConverter),
+      ),
   );
 
   return c;
