@@ -1,5 +1,36 @@
 # Changelog
 
+## [1.6.0](https://github.com/Endika/converthub/compare/v1.5.2...v1.6.0) (2026-05-21)
+
+
+### Features
+
+* **i18n:** add tip calculator strings in en/es/eu ([543ee56](https://github.com/Endika/converthub/commit/543ee569c0565bcb0d70cd7ab4bcfe6c98ac5834))
+* **tipping:** add CalculateTipUseCase composing calculator and rate port ([876ecd0](https://github.com/Endika/converthub/commit/876ecd0dfe40e7805ca7fd352bffa3f0b841e7b3))
+* **tipping:** add default tip percent per currency catalog ([1e68b62](https://github.com/Endika/converthub/commit/1e68b6213c929f448e49eb02462741e3b74fcf5c))
+* **tipping:** add InvalidTipInputError and TipCalculation types ([938c2dd](https://github.com/Endika/converthub/commit/938c2dd137375bbd09ff4656b0b90e5fba0dee9a))
+* **tipping:** add RateConverterPort and ExchangeRate adapter ([2f9efde](https://github.com/Endika/converthub/commit/2f9efdeb3e8c278d92531f04bb2d529995b060c4))
+* **tipping:** add TipCalculator domain service ([255c7a9](https://github.com/Endika/converthub/commit/255c7a91e2dbeb1f2f010c503a723caed64f2a16))
+* **tipping:** register tip calculator services in DI container ([9fb963d](https://github.com/Endika/converthub/commit/9fb963d0db88f745e7983c779a90f86b788cd9d1))
+* **ui:** add tip calculator component with dual-currency output ([028f639](https://github.com/Endika/converthub/commit/028f639b8dfcded2dbf63deb68eab31cfec3ef34))
+* **ui:** register tip calculator tab in HomePage ([bf9a457](https://github.com/Endika/converthub/commit/bf9a457ef8ae15a3d06d71d5058e37b69f47b617))
+* **ui:** show app version in bottom-right footer ([d853146](https://github.com/Endika/converthub/commit/d853146ce6afd77c67c836076bab738441226cdc))
+
+
+### Bug Fixes
+
+* **ui:** keep tip result rows blank when no bill is entered ([a11c720](https://github.com/Endika/converthub/commit/a11c7202b8ec7b499939d26c45ac2d5fe3ae8225))
+
+
+### Documentation
+
+* rewrite README around the traveller use case ([b279894](https://github.com/Endika/converthub/commit/b27989422b78da8f16a240be0ed75442b90a04b7))
+
+
+### Chores
+
+* **build:** expose package version as __APP_VERSION__ ([dd51c40](https://github.com/Endika/converthub/commit/dd51c40009a120961cf01a50016aa6a2e6bc852e))
+
 ## [1.5.2](https://github.com/Endika/converthub/compare/v1.5.1...v1.5.2) (2026-05-20)
 
 
