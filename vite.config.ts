@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 import { VitePWA } from 'vite-plugin-pwa';
+import pkg from './package.json' with { type: 'json' };
 
 export default defineConfig({
   root: './',
@@ -90,6 +91,6 @@ export default defineConfig({
   },
 
   define: {
-    __VERSION__: JSON.stringify('1.0.0'),
+    __APP_VERSION__: JSON.stringify(pkg.version),
   },
 });
