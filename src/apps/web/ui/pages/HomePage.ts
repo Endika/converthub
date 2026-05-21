@@ -1,3 +1,4 @@
+import type { CalculateTipUseCase } from '../../../../contexts/tipping/application/CalculateTipUseCase';
 import type { ConvertDistanceUseCase } from '../../../../contexts/conversion/application/ConvertDistanceUseCase';
 import type { ConvertSizeUseCase } from '../../../../contexts/conversion/application/ConvertSizeUseCase';
 import type { ConvertSpeedUseCase } from '../../../../contexts/conversion/application/ConvertSpeedUseCase';
@@ -35,6 +36,7 @@ import { NotesList } from '../components/NotesList';
 import { SidePanel, type SidePanelKey } from '../components/SidePanel';
 import { SizeConverter } from '../components/SizeConverter';
 import { TabNavigation, type TabDefinition } from '../components/TabNavigation';
+import { TipCalculator } from '../components/TipCalculator';
 import {
   UnitConverter,
   type UnitConverterConfig,
@@ -47,7 +49,8 @@ type TabKey =
   | 'volume'
   | 'temperature'
   | 'speed'
-  | 'size';
+  | 'size'
+  | 'tip';
 
 const TABS: readonly TabDefinition<TabKey>[] = [
   { key: 'currency', labelKey: 'nav_currencies' },
@@ -57,10 +60,11 @@ const TABS: readonly TabDefinition<TabKey>[] = [
   { key: 'temperature', labelKey: 'nav_temperature' },
   { key: 'speed', labelKey: 'nav_speed' },
   { key: 'size', labelKey: 'nav_sizes' },
+  { key: 'tip', labelKey: 'nav_tip' },
 ];
 
 const UNIT_CONFIGS: Record<
-  Exclude<TabKey, 'currency' | 'size'>,
+  Exclude<TabKey, 'currency' | 'size' | 'tip'>,
   UnitConverterConfig
 > = {
   distance: {
@@ -308,6 +312,13 @@ export class HomePage {
         callbacks,
       );
     }
+    if (tab === 'tip') {
+      return new TipCalculator(
+        this.converterRegion,
+        language,
+        this.container.get<CalculateTipUseCase>(SERVICES.calculateTipUseCase),
+      );
+    }
     if (tab === 'size') {
       return new SizeConverter(
         this.converterRegion,
@@ -319,7 +330,7 @@ export class HomePage {
     }
 
     const useCaseByTab: Record<
-      Exclude<TabKey, 'currency' | 'size'>,
+      Exclude<TabKey, 'currency' | 'size' | 'tip'>,
       | ConvertDistanceUseCase
       | ConvertWeightUseCase
       | ConvertVolumeUseCase

@@ -58,6 +58,7 @@ describe('HomePage', () => {
       'temperature',
       'speed',
       'size',
+      'tip',
     ]);
   });
 
