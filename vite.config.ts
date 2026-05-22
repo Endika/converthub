@@ -50,7 +50,7 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: ({ url }) => url.host === 'api.frankfurter.app',
+            urlPattern: ({ url }) => url.host === 'api.frankfurter.dev',
             handler: 'NetworkFirst',
             options: {
               cacheName: 'frankfurter-api',

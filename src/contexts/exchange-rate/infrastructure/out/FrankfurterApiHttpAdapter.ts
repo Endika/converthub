@@ -2,7 +2,7 @@ import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
 import { ExchangeRateFetchError } from '../../domain/errors/ExchangeRateFetchError';
 import type { ExchangeRateApiPort } from '../../domain/ports/out/ExchangeRateApiPort';
 
-const DEFAULT_ENDPOINT = 'https://api.frankfurter.app/latest';
+const DEFAULT_ENDPOINT = 'https://api.frankfurter.dev/v1/latest';
 
 const parseRates = (raw: unknown): Record<string, number> | null => {
   if (typeof raw !== 'object' || raw === null) return null;
