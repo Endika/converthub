@@ -1,39 +1,52 @@
 # ConvertHub
 
-**The offline converter for travellers.** Pay the right tip, know what 5,000 yen actually costs you in euros, and figure out if you fit a size 8 in Italy — without burning your data roaming.
+> The offline converter for travellers.
 
-[**Try it now →**](https://endika.github.io/converthub/)
+**[Try it now →](https://endika.github.io/converthub/)**
 
-Install it on your phone or laptop and it just works on the plane, in the metro, anywhere. No account. No ads. No tracking.
+[![Latest release](https://img.shields.io/github/v/release/Endika/converthub?style=flat-square&color=0066FF&label=release)](https://github.com/Endika/converthub/releases/latest)
+[![CI](https://img.shields.io/github/actions/workflow/status/Endika/converthub/ci.yml?style=flat-square&label=ci&branch=main)](https://github.com/Endika/converthub/actions/workflows/ci.yml)
+[![Last commit](https://img.shields.io/github/last-commit/Endika/converthub?style=flat-square)](https://github.com/Endika/converthub/commits/main)
+[![Conventional Commits](https://img.shields.io/badge/conventional_commits-1.0.0-FE5196?style=flat-square)](https://www.conventionalcommits.org)
+[![License: MIT](https://img.shields.io/github/license/Endika/converthub?style=flat-square&color=10B981)](./LICENSE)
 
-## What it does
+ConvertHub is the travel companion that pays the right tip, tells you what 5,000 yen actually costs you in euros, and figures out whether you fit a size 8 in Italy — without burning your data roaming. Install it on your phone or laptop and it just works on the plane, in the metro, anywhere. No account. No ads. No tracking.
+
+## What you can do
 
 - **Currencies.** All 160+, with the last rates cached so you don't need signal at the restaurant.
-- **Tip calculator.** Type the bill in the local currency, see tip and total in both that currency and yours. Defaults adjust per country — USA 18%, Japan 0%, Spain 10%, and so on. Split between any number of people, round up the total if you want.
+- **Tip calculator.** Type the bill in the local currency, see tip and total in both currencies. Defaults adjust per country — USA 18%, Japan 0%, Spain 10%. Split between any number of people, round up the total if you want.
 - **Distance, weight, volume, temperature, speed.** The everyday conversions you actually need abroad.
 - **Clothing & shoe sizes.** EU / US / UK for men, women and kids — the part of travel nobody tells you about until you're in the fitting room.
 - **Travel notes.** Jot down "the café near Plaza Mayor" with a location attached.
 - **Favorites & history.** Pin the conversions you do most often, replay the last 20.
 - **Three languages.** English, Spanish, Basque.
 
-## Why it might be your travel app
+## How to start
 
-- **Offline by design.** Cached rates, full app shell. The currency tab is the only feature that benefits from internet — and even that runs on whatever rates you last loaded.
-- **Installable.** Open it in your browser, then "Add to Home Screen" on mobile or "Install" on desktop. Behaves like a native app, takes about 100 KB.
-- **No tracking, no ads, no account.** The source code is here, end to end.
-- **Free and open source.** MIT licensed.
+1. Open the [live demo](https://endika.github.io/converthub/) on your phone or computer.
+2. Install it (see below) so it works offline next time.
+3. Convert. The currency tab benefits from internet for fresh rates; every other tab runs offline.
 
 ## Install on your device
 
-1. Open [the live app](https://endika.github.io/converthub/) on your phone or computer.
-2. Add it to your home screen, or install it as an app — your browser will offer the option from the address bar or the share menu.
-3. Open it like any other app, online or offline.
+Open the demo in Chrome, Edge or Safari and use **"Add to Home Screen"** (mobile) or **"Install"** (desktop). Behaves like a native app, takes about 100 KB, and works offline by design.
+
+## Privacy
+
+There is no ConvertHub server. Your favorites, history and notes live in your own browser. The only network traffic is fetching currency rates — and even that uses whatever rates you last loaded if you're offline. No account, no ads, no tracking, ever.
 
 ---
 
 ## For developers
 
-TypeScript (strict) + Vite + Vitest + Playwright. Vanilla DOM, no framework. Hexagonal (Ports & Adapters) layout with bounded contexts under `src/contexts/` and a thin DI container at `src/apps/web/di/`. The dependency rule (`domain ← application ← infrastructure`) is enforced via `no-restricted-imports`.
+Open-source, MIT licensed. PRs welcome.
+
+**Stack** — TypeScript (strict), vanilla DOM with no framework runtime, Vite, Vitest, Playwright, ESLint + Prettier, release-please for automatic versioning from Conventional Commits.
+
+**Architecture** — Hexagonal (Ports & Adapters) with bounded contexts under `src/contexts/` and a thin DI container at `src/apps/web/di/`. The dependency rule (`domain ← application ← infrastructure`) is enforced via `no-restricted-imports`.
+
+**Local dev**
 
 ```bash
 npm install
@@ -43,8 +56,4 @@ npm run e2e             # end-to-end (playwright)
 npm run build           # production build with service worker
 ```
 
-Requires Node ≥ 20, npm ≥ 9.
-
-## License
-
-MIT.
+Requires Node ≥ 20, npm ≥ 9. CI runs lint, typecheck, tests and the production build on every PR.
