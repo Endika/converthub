@@ -66,7 +66,11 @@ const en: Translations = {
     'Both sources update once a day. Compare them when a rate looks off.',
   settings_provider_exchangerate_api:
     'exchangerate-api.com (commercial average)',
-  settings_provider_frankfurter: 'frankfurter.app (European Central Bank)',
+  settings_provider_frankfurter: 'frankfurter.dev (European Central Bank)',
+  settings_provider_open_er_api:
+    'open.er-api.com (free mirror of exchangerate-api)',
+  settings_provider_fawazahmed:
+    'fawazahmed0/exchange-api (broad coverage incl. crypto)',
 };
 
 export default en;

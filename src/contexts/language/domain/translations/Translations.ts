@@ -63,6 +63,8 @@ export interface Translations {
   settings_provider_description: string;
   settings_provider_exchangerate_api: string;
   settings_provider_frankfurter: string;
+  settings_provider_open_er_api: string;
+  settings_provider_fawazahmed: string;
 }
 
 export type TranslationKey = keyof Translations;

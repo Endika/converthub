@@ -9,6 +9,8 @@ import type { TranslationKey } from '../../../../contexts/language/domain/transl
 const PROVIDER_LABEL_KEY: Record<RateProvider, TranslationKey> = {
   'exchangerate-api': 'settings_provider_exchangerate_api',
   frankfurter: 'settings_provider_frankfurter',
+  'open-er-api': 'settings_provider_open_er_api',
+  fawazahmed: 'settings_provider_fawazahmed',
 };
 
 export interface SettingsPanelCallbacks {

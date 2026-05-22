@@ -1,4 +1,9 @@
-export const RATE_PROVIDERS = ['exchangerate-api', 'frankfurter'] as const;
+export const RATE_PROVIDERS = [
+  'exchangerate-api',
+  'frankfurter',
+  'open-er-api',
+  'fawazahmed',
+] as const;
 
 export type RateProvider = (typeof RATE_PROVIDERS)[number];
 

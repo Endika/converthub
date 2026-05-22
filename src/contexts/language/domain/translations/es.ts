@@ -66,7 +66,11 @@ const es: Translations = {
     'Ambas fuentes actualizan una vez al día. Compáralas si un cambio se ve raro.',
   settings_provider_exchangerate_api:
     'exchangerate-api.com (promedio comercial)',
-  settings_provider_frankfurter: 'frankfurter.app (Banco Central Europeo)',
+  settings_provider_frankfurter: 'frankfurter.dev (Banco Central Europeo)',
+  settings_provider_open_er_api:
+    'open.er-api.com (alternativa gratuita de exchangerate-api)',
+  settings_provider_fawazahmed:
+    'fawazahmed0/exchange-api (amplia cobertura, incluye crypto)',
 };
 
 export default es;

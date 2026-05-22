@@ -34,8 +34,15 @@ describe('SelectorExchangeRateApi', () => {
   it('routes the call to the adapter chosen by the preference', async () => {
     const a = stubAdapter('A');
     const b = stubAdapter('B');
+    const c = stubAdapter('C');
+    const d = stubAdapter('D');
     const selector = new SelectorExchangeRateApi(
-      { 'exchangerate-api': a, frankfurter: b },
+      {
+        'exchangerate-api': a,
+        frankfurter: b,
+        'open-er-api': c,
+        fawazahmed: d,
+      },
       fixedPreference('frankfurter'),
     );
 
@@ -43,23 +50,32 @@ describe('SelectorExchangeRateApi', () => {
 
     expect(a.calls).toEqual([]);
     expect(b.calls).toEqual(['USD']);
+    expect(c.calls).toEqual([]);
+    expect(d.calls).toEqual([]);
     if (result.ok) expect(result.value['B-rate']).toBe(42);
   });
 
   it('re-reads the preference on every call, so a runtime change is honored', async () => {
     const a = stubAdapter('A');
     const b = stubAdapter('B');
+    const c = stubAdapter('C');
+    const d = stubAdapter('D');
     let active: RateProvider = 'exchangerate-api';
     const selector = new SelectorExchangeRateApi(
-      { 'exchangerate-api': a, frankfurter: b },
+      {
+        'exchangerate-api': a,
+        frankfurter: b,
+        'open-er-api': c,
+        fawazahmed: d,
+      },
       { get: () => active, set: () => undefined },
     );
 
     await selector.fetchLatest('EUR');
-    active = 'frankfurter';
+    active = 'fawazahmed';
     await selector.fetchLatest('EUR');
 
     expect(a.calls).toEqual(['EUR']);
-    expect(b.calls).toEqual(['EUR']);
+    expect(d.calls).toEqual(['EUR']);
   });
 });

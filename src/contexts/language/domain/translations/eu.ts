@@ -66,7 +66,11 @@ const eu: Translations = {
     'Bi iturriek egunean behin eguneratzen dira. Konparatu tasaren bat arraroa iruditzen bazaizu.',
   settings_provider_exchangerate_api:
     'exchangerate-api.com (merkataritza-batezbestekoa)',
-  settings_provider_frankfurter: 'frankfurter.app (Europako Banku Zentrala)',
+  settings_provider_frankfurter: 'frankfurter.dev (Europako Banku Zentrala)',
+  settings_provider_open_er_api:
+    'open.er-api.com (exchangerate-api-ren doako ispilua)',
+  settings_provider_fawazahmed:
+    'fawazahmed0/exchange-api (estaldura zabala, crypto barne)',
 };
 
 export default eu;

@@ -17,9 +17,11 @@ import { GetExchangeRateUseCase } from '../../../contexts/exchange-rate/applicat
 import { UpdateExchangeRatesUseCase } from '../../../contexts/exchange-rate/application/UpdateExchangeRatesUseCase';
 import { ExchangeRateService } from '../../../contexts/exchange-rate/domain/services/ExchangeRateService';
 import { ExchangeRateApiHttpAdapter } from '../../../contexts/exchange-rate/infrastructure/out/ExchangeRateApiHttpAdapter';
+import { FawazahmedApiHttpAdapter } from '../../../contexts/exchange-rate/infrastructure/out/FawazahmedApiHttpAdapter';
 import { FrankfurterApiHttpAdapter } from '../../../contexts/exchange-rate/infrastructure/out/FrankfurterApiHttpAdapter';
 import { LocalStorageExchangeRateRepository } from '../../../contexts/exchange-rate/infrastructure/out/LocalStorageExchangeRateRepository';
 import { LocalStorageRateProviderPreference } from '../../../contexts/exchange-rate/infrastructure/out/LocalStorageRateProviderPreference';
+import { OpenErApiHttpAdapter } from '../../../contexts/exchange-rate/infrastructure/out/OpenErApiHttpAdapter';
 import { SelectorExchangeRateApi } from '../../../contexts/exchange-rate/infrastructure/out/SelectorExchangeRateApi';
 import { AddFavoriteUseCase } from '../../../contexts/favorites/application/AddFavoriteUseCase';
 import { GetFavoritesUseCase } from '../../../contexts/favorites/application/GetFavoritesUseCase';
@@ -177,6 +179,8 @@ export const buildContainer = (): Container => {
         {
           'exchangerate-api': new ExchangeRateApiHttpAdapter(),
           frankfurter: new FrankfurterApiHttpAdapter(),
+          'open-er-api': new OpenErApiHttpAdapter(),
+          fawazahmed: new FawazahmedApiHttpAdapter(),
         },
         c.get(SERVICES.rateProviderPreference),
       ),

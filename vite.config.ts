@@ -61,6 +61,32 @@ export default defineConfig({
               cacheableResponse: { statuses: [0, 200] },
             },
           },
+          {
+            urlPattern: ({ url }) => url.host === 'open.er-api.com',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'open-er-api',
+              expiration: {
+                maxEntries: 5,
+                maxAgeSeconds: 24 * 60 * 60,
+              },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            urlPattern: ({ url }) =>
+              url.host === 'cdn.jsdelivr.net' &&
+              url.pathname.includes('@fawazahmed0/currency-api'),
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'fawazahmed-currency-api',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 24 * 60 * 60,
+              },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
         ],
       },
     }),

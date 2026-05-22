@@ -34,7 +34,7 @@ describe('SettingsPanel', () => {
     const radios = root.querySelectorAll<HTMLInputElement>(
       'input[name="rate-provider"]',
     );
-    expect(radios).toHaveLength(2);
+    expect(radios).toHaveLength(4);
     const checked = root.querySelector<HTMLInputElement>(
       'input[name="rate-provider"]:checked',
     );
