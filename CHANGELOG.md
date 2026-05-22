@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/Endika/converthub/compare/v1.6.1...v1.6.2) (2026-05-22)
+
+
+### Documentation
+
+* **license:** add MIT LICENSE file ([4310615](https://github.com/Endika/converthub/commit/43106153d653dadf00be8dc67777f347e7db552c))
+
 ## [1.6.1](https://github.com/Endika/converthub/compare/v1.6.0...v1.6.1) (2026-05-22)
 
 
