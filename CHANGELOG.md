@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.1](https://github.com/Endika/converthub/compare/v1.9.0...v1.9.1) (2026-05-22)
+
+
+### Bug Fixes
+
+* **ci:** grant actions: write to enable workflow_dispatch self-rearm ([6e1a076](https://github.com/Endika/converthub/commit/6e1a076a5a74b83a24833378c6625f893ab765c3))
+
 ## [1.9.0](https://github.com/Endika/converthub/compare/v1.8.0...v1.9.0) (2026-05-22)
 
 
