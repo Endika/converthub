@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.3](https://github.com/Endika/converthub/compare/v1.9.2...v1.9.3) (2026-05-22)
+
+
+### Bug Fixes
+
+* **ci:** parse release-please pr payload in run script, not env ([2fbcf3a](https://github.com/Endika/converthub/commit/2fbcf3a1d8062227f915cf53a2102dc9b228b8a7))
+
 ## [1.9.2](https://github.com/Endika/converthub/compare/v1.9.1...v1.9.2) (2026-05-22)
 
 
