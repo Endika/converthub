@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.6.1](https://github.com/Endika/converthub/compare/v1.6.0...v1.6.1) (2026-05-22)
+
+
+### Bug Fixes
+
+* **release:** pass -R repo to gh pr merge ([1e86237](https://github.com/Endika/converthub/commit/1e862377592fa13420782b612f37b009b95346e0))
+
+
+### Documentation
+
+* **readme:** align structure with kartaak and mintza ([a7e76b3](https://github.com/Endika/converthub/commit/a7e76b3975c7a751d5cc1902df88ed24fc31e5d0))
+
+
+### Chores
+
+* **release:** auto-merge release-please PRs ([50f0520](https://github.com/Endika/converthub/commit/50f05203ee8477ba99cf1243f2cab591239973b6))
+
 ## [1.6.0](https://github.com/Endika/converthub/compare/v1.5.2...v1.6.0) (2026-05-21)
 
 
