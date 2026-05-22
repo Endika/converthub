@@ -61,6 +61,12 @@ const es: Translations = {
   favorites_empty: 'Aún no hay favoritos',
   notes_empty: 'Aún no hay notas',
   history_empty: 'Aún no hay conversiones',
+  settings_provider_title: 'Fuente de tipos de cambio',
+  settings_provider_description:
+    'Ambas fuentes actualizan una vez al día. Compáralas si un cambio se ve raro.',
+  settings_provider_exchangerate_api:
+    'exchangerate-api.com (promedio comercial)',
+  settings_provider_frankfurter: 'frankfurter.app (Banco Central Europeo)',
 };
 
 export default es;

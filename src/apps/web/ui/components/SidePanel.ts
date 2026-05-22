@@ -1,7 +1,7 @@
 import type { LanguageService } from '../../../../contexts/language/domain/services/LanguageService';
 import type { TranslationKey } from '../../../../contexts/language/domain/translations/Translations';
 
-export type SidePanelKey = 'history' | 'favorites' | 'notes';
+export type SidePanelKey = 'history' | 'favorites' | 'notes' | 'settings';
 
 export interface SidePanelTab {
   readonly key: SidePanelKey;
@@ -12,6 +12,7 @@ const TABS: readonly SidePanelTab[] = [
   { key: 'history', labelKey: 'nav_history' },
   { key: 'favorites', labelKey: 'nav_favorites' },
   { key: 'notes', labelKey: 'nav_notes' },
+  { key: 'settings', labelKey: 'nav_settings' },
 ];
 
 export interface SidePanelCallbacks {

@@ -61,6 +61,12 @@ const en: Translations = {
   favorites_empty: 'No favorites yet',
   notes_empty: 'No notes yet',
   history_empty: 'No conversions yet',
+  settings_provider_title: 'Exchange rate source',
+  settings_provider_description:
+    'Both sources update once a day. Compare them when a rate looks off.',
+  settings_provider_exchangerate_api:
+    'exchangerate-api.com (commercial average)',
+  settings_provider_frankfurter: 'frankfurter.app (European Central Bank)',
 };
 
 export default en;

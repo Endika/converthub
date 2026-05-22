@@ -11,6 +11,7 @@ import { TEMPERATURE_UNITS } from '../../../../contexts/conversion/domain/model/
 import { VOLUME_UNITS } from '../../../../contexts/conversion/domain/model/catalogs/volume';
 import { WEIGHT_UNITS } from '../../../../contexts/conversion/domain/model/catalogs/weight';
 import type { UpdateExchangeRatesUseCase } from '../../../../contexts/exchange-rate/application/UpdateExchangeRatesUseCase';
+import type { RateProviderPreferencePort } from '../../../../contexts/exchange-rate/domain/ports/out/RateProviderPreferencePort';
 import type { ExchangeRateService } from '../../../../contexts/exchange-rate/domain/services/ExchangeRateService';
 import type { AddFavoriteUseCase } from '../../../../contexts/favorites/application/AddFavoriteUseCase';
 import type { GetFavoritesUseCase } from '../../../../contexts/favorites/application/GetFavoritesUseCase';
@@ -33,6 +34,7 @@ import { HistoryList } from '../components/HistoryList';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { MoneyConverter } from '../components/MoneyConverter';
 import { NotesList } from '../components/NotesList';
+import { SettingsPanel } from '../components/SettingsPanel';
 import { SidePanel, type SidePanelKey } from '../components/SidePanel';
 import { SizeConverter } from '../components/SizeConverter';
 import { TabNavigation, type TabDefinition } from '../components/TabNavigation';
@@ -252,7 +254,7 @@ export class HomePage {
         this.container.get(SERVICES.convertMoneyUseCase),
         { onApply: (favorite) => this.applyFavorite(favorite) },
       );
-    } else {
+    } else if (key === 'notes') {
       this.currentSideList = new NotesList(
         region,
         language,
@@ -260,6 +262,14 @@ export class HomePage {
         this.container.get<AddNoteUseCase>(SERVICES.addNoteUseCase),
         this.container.get<UpdateNoteUseCase>(SERVICES.updateNoteUseCase),
         this.container.get<DeleteNoteUseCase>(SERVICES.deleteNoteUseCase),
+      );
+    } else {
+      this.currentSideList = new SettingsPanel(
+        region,
+        language,
+        this.container.get<RateProviderPreferencePort>(
+          SERVICES.rateProviderPreference,
+        ),
       );
     }
   }
@@ -317,6 +327,7 @@ export class HomePage {
         this.converterRegion,
         language,
         this.container.get<CalculateTipUseCase>(SERVICES.calculateTipUseCase),
+        this.container.get<GetFavoritesUseCase>(SERVICES.getFavoritesUseCase),
       );
     }
     if (tab === 'size') {

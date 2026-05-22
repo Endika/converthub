@@ -1,5 +1,6 @@
 import type { CalculateTipUseCase } from '../../../../contexts/tipping/application/CalculateTipUseCase';
 import { SUPPORTED_CURRENCIES } from '../../../../contexts/conversion/domain/model/catalogs/currencies';
+import type { GetFavoritesUseCase } from '../../../../contexts/favorites/application/GetFavoritesUseCase';
 import type { LanguageService } from '../../../../contexts/language/domain/services/LanguageService';
 import type { TranslationKey } from '../../../../contexts/language/domain/translations/Translations';
 import { defaultTipFor } from '../../../../contexts/tipping/domain/model/catalogs/currencyTipDefaults';
@@ -20,12 +21,14 @@ export class TipCalculator {
   private percentButtons: HTMLButtonElement[] = [];
   private currentPercent = 0;
   private userTouchedPercent = false;
+  private displayNames: Intl.DisplayNames | null = null;
   private readonly unsubscribe: () => void;
 
   constructor(
     private readonly root: HTMLElement,
     private readonly languageService: LanguageService,
     private readonly useCase: CalculateTipUseCase,
+    private readonly getFavorites: GetFavoritesUseCase,
   ) {
     this.render();
     this.unsubscribe = this.languageService.onChange(() => this.render());
@@ -35,16 +38,47 @@ export class TipCalculator {
     this.unsubscribe();
   }
 
+  private buildDisplayNames(): Intl.DisplayNames | null {
+    try {
+      return new Intl.DisplayNames([this.languageService.getCurrent().value], {
+        type: 'currency',
+      });
+    } catch {
+      return null;
+    }
+  }
+
+  private optionLabel(code: string): string {
+    const name = this.displayNames?.of(code);
+    return name !== undefined && name !== code ? `${code} — ${name}` : code;
+  }
+
+  private buildFavoriteChipsHtml(): string {
+    const moneyFavorites = this.getFavorites
+      .execute()
+      .filter((f) => f.type === 'money');
+    if (moneyFavorites.length === 0) return '';
+    const chips = moneyFavorites
+      .map(
+        (f) =>
+          `<button type="button" class="tip-favorites__chip" data-from="${f.fromUnit}" data-to="${f.toUnit}">★ ${f.fromUnit} → ${f.toUnit}</button>`,
+      )
+      .join('');
+    return `<div class="tip-favorites" role="group">${chips}</div>`;
+  }
+
   private render(): void {
     const t = (k: TranslationKey): string => this.languageService.translate(k);
+    this.displayNames = this.buildDisplayNames();
     const currencyOptions = SUPPORTED_CURRENCIES.map(
-      (c) => `<option value="${c}">${c}</option>`,
+      (c) => `<option value="${c}">${this.optionLabel(c)}</option>`,
     ).join('');
 
     this.userTouchedPercent = false;
 
     this.root.innerHTML = `
       <form class="converter converter--tip" novalidate>
+        ${this.buildFavoriteChipsHtml()}
         <label class="field">
           <span class="field__label">${t('tip_bill')}</span>
           <input type="number" name="bill" inputmode="decimal" min="0" step="0.01" value="" />
@@ -153,7 +187,31 @@ export class TipCalculator {
         this.setPercent(value, true);
       }
     });
+    form
+      .querySelectorAll<HTMLButtonElement>('.tip-favorites__chip')
+      .forEach((chip) => {
+        chip.addEventListener('click', () => {
+          const from = chip.dataset['from'];
+          const to = chip.dataset['to'];
+          if (from === undefined || to === undefined) return;
+          this.applyFavoritePair(from, to);
+        });
+      });
 
+    this.refreshResult();
+  }
+
+  private applyFavoritePair(from: string, to: string): void {
+    const optionExists = (sel: HTMLSelectElement, value: string): boolean =>
+      Array.from(sel.options).some((o) => o.value === value);
+    if (optionExists(this.billCurrencySelect, from)) {
+      this.billCurrencySelect.value = from;
+      this.applyDefaultPercentForCurrency();
+      this.updatePresetActiveState();
+    }
+    if (optionExists(this.homeCurrencySelect, to)) {
+      this.homeCurrencySelect.value = to;
+    }
     this.refreshResult();
   }
 

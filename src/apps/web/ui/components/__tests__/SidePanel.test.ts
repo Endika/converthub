@@ -4,7 +4,7 @@ import { LanguageService } from '../../../../../contexts/language/domain/service
 import { SidePanel } from '../SidePanel';
 
 describe('SidePanel', () => {
-  it('renders three tabs and marks the initial as active', () => {
+  it('renders the four tabs in order and marks the initial as active', () => {
     const root = document.createElement('div');
     const language = new LanguageService(LanguageCode.fromTrusted('en'));
     new SidePanel(root, language, { onChange: vi.fn() }, 'favorites');
@@ -13,6 +13,7 @@ describe('SidePanel', () => {
       'history',
       'favorites',
       'notes',
+      'settings',
     ]);
     expect(
       root.querySelector('.is-active')?.getAttribute('data-side-tab'),

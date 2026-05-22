@@ -17,7 +17,10 @@ import { GetExchangeRateUseCase } from '../../../contexts/exchange-rate/applicat
 import { UpdateExchangeRatesUseCase } from '../../../contexts/exchange-rate/application/UpdateExchangeRatesUseCase';
 import { ExchangeRateService } from '../../../contexts/exchange-rate/domain/services/ExchangeRateService';
 import { ExchangeRateApiHttpAdapter } from '../../../contexts/exchange-rate/infrastructure/out/ExchangeRateApiHttpAdapter';
+import { FrankfurterApiHttpAdapter } from '../../../contexts/exchange-rate/infrastructure/out/FrankfurterApiHttpAdapter';
 import { LocalStorageExchangeRateRepository } from '../../../contexts/exchange-rate/infrastructure/out/LocalStorageExchangeRateRepository';
+import { LocalStorageRateProviderPreference } from '../../../contexts/exchange-rate/infrastructure/out/LocalStorageRateProviderPreference';
+import { SelectorExchangeRateApi } from '../../../contexts/exchange-rate/infrastructure/out/SelectorExchangeRateApi';
 import { AddFavoriteUseCase } from '../../../contexts/favorites/application/AddFavoriteUseCase';
 import { GetFavoritesUseCase } from '../../../contexts/favorites/application/GetFavoritesUseCase';
 import { RemoveFavoriteUseCase } from '../../../contexts/favorites/application/RemoveFavoriteUseCase';
@@ -62,6 +65,7 @@ export const SERVICES = {
   // exchange-rate
   exchangeRateRepository: 'exchangeRateRepository',
   exchangeRateApi: 'exchangeRateApi',
+  rateProviderPreference: 'rateProviderPreference',
   exchangeRateService: 'exchangeRateService',
   updateExchangeRatesUseCase: 'updateExchangeRatesUseCase',
   getExchangeRateUseCase: 'getExchangeRateUseCase',
@@ -163,8 +167,19 @@ export const buildContainer = (): Container => {
     () => new LocalStorageExchangeRateRepository(),
   );
   c.registerSingleton(
+    SERVICES.rateProviderPreference,
+    () => new LocalStorageRateProviderPreference(),
+  );
+  c.registerSingleton(
     SERVICES.exchangeRateApi,
-    () => new ExchangeRateApiHttpAdapter(),
+    () =>
+      new SelectorExchangeRateApi(
+        {
+          'exchangerate-api': new ExchangeRateApiHttpAdapter(),
+          frankfurter: new FrankfurterApiHttpAdapter(),
+        },
+        c.get(SERVICES.rateProviderPreference),
+      ),
   );
   c.registerSingleton(
     SERVICES.exchangeRateService,

@@ -61,6 +61,12 @@ const eu: Translations = {
   favorites_empty: 'Oraindik gogokorik ez',
   notes_empty: 'Oraindik oharrik ez',
   history_empty: 'Oraindik bihurketarik ez',
+  settings_provider_title: 'Truke-tasen iturria',
+  settings_provider_description:
+    'Bi iturriek egunean behin eguneratzen dira. Konparatu tasaren bat arraroa iruditzen bazaizu.',
+  settings_provider_exchangerate_api:
+    'exchangerate-api.com (merkataritza-batezbestekoa)',
+  settings_provider_frankfurter: 'frankfurter.app (Europako Banku Zentrala)',
 };
 
 export default eu;

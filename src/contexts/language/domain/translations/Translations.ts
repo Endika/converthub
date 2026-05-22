@@ -59,6 +59,10 @@ export interface Translations {
   favorites_empty: string;
   notes_empty: string;
   history_empty: string;
+  settings_provider_title: string;
+  settings_provider_description: string;
+  settings_provider_exchangerate_api: string;
+  settings_provider_frankfurter: string;
 }
 
 export type TranslationKey = keyof Translations;

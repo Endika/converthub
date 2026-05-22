@@ -1,5 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { CalculateTipUseCase } from '../../../../../contexts/tipping/application/CalculateTipUseCase';
+import { GetFavoritesUseCase } from '../../../../../contexts/favorites/application/GetFavoritesUseCase';
+import { Favorite } from '../../../../../contexts/favorites/domain/model/Favorite';
+import type { FavoritesRepositoryPort } from '../../../../../contexts/favorites/domain/ports/out/FavoritesRepositoryPort';
+import { FavoritesService } from '../../../../../contexts/favorites/domain/services/FavoritesService';
 import { LanguageCode } from '../../../../../contexts/language/domain/model/LanguageCode';
 import { LanguageService } from '../../../../../contexts/language/domain/services/LanguageService';
 import type { RateConverterPort } from '../../../../../contexts/tipping/domain/ports/out/RateConverterPort';
@@ -14,7 +18,21 @@ class StubRateConverter implements RateConverterPort {
   }
 }
 
-const makeComponent = (): { root: HTMLElement; component: TipCalculator } => {
+const buildFavoritesRepo = (
+  initial: readonly Favorite[] = [],
+): FavoritesRepositoryPort => {
+  let state: Favorite[] = [...initial];
+  return {
+    loadAll: () => [...state],
+    saveAll: (next) => {
+      state = [...next];
+    },
+  };
+};
+
+const makeComponent = (
+  favorites: readonly Favorite[] = [],
+): { root: HTMLElement; component: TipCalculator } => {
   const root = document.createElement('section');
   document.body.appendChild(root);
   const language = new LanguageService(LanguageCode.fromTrusted('en'));
@@ -22,7 +40,10 @@ const makeComponent = (): { root: HTMLElement; component: TipCalculator } => {
     new TipCalculatorService(),
     new StubRateConverter(),
   );
-  const component = new TipCalculator(root, language, useCase);
+  const getFavorites = new GetFavoritesUseCase(
+    new FavoritesService(buildFavoritesRepo(favorites)),
+  );
+  const component = new TipCalculator(root, language, useCase, getFavorites);
   return { root, component };
 };
 
@@ -86,6 +107,70 @@ describe('TipCalculator (UI)', () => {
     ) as HTMLElement;
     // No user input — home column must be empty, NOT '—'.
     expect(homeTotal.textContent ?? '').not.toContain('—');
+  });
+
+  it('renders one chip per money favorite and applies the pair on click', () => {
+    const favorites = [
+      Favorite.create({
+        type: 'money',
+        fromUnit: 'EUR',
+        toUnit: 'USD',
+        label: 'EUR → USD',
+      }),
+      Favorite.create({
+        type: 'money',
+        fromUnit: 'JPY',
+        toUnit: 'EUR',
+        label: 'JPY → EUR',
+      }),
+      Favorite.create({
+        type: 'weight',
+        fromUnit: 'kg',
+        toUnit: 'lb',
+        label: 'kg → lb',
+      }),
+    ];
+    const { root } = makeComponent(favorites);
+
+    const chips = root.querySelectorAll<HTMLButtonElement>(
+      '.tip-favorites__chip',
+    );
+    expect(chips.length).toBe(2);
+    expect(chips[0]?.textContent).toContain('EUR');
+    expect(chips[0]?.textContent).toContain('USD');
+
+    const billCurrency = root.querySelector(
+      'select[name="billCurrency"]',
+    ) as HTMLSelectElement;
+    const homeCurrency = root.querySelector(
+      'select[name="homeCurrency"]',
+    ) as HTMLSelectElement;
+    billCurrency.value = 'GBP';
+    homeCurrency.value = 'CHF';
+
+    chips[1]?.click();
+    expect(billCurrency.value).toBe('JPY');
+    expect(homeCurrency.value).toBe('EUR');
+  });
+
+  it('does not render the favorites row when there are no money favorites', () => {
+    const { root } = makeComponent([
+      Favorite.create({
+        type: 'distance',
+        fromUnit: 'km',
+        toUnit: 'mi',
+        label: 'km → mi',
+      }),
+    ]);
+    expect(root.querySelector('.tip-favorites')).toBeNull();
+  });
+
+  it('shows currency names alongside the code in the select options', () => {
+    const { root } = makeComponent();
+    const billOption = root.querySelector(
+      'select[name="billCurrency"] option[value="EUR"]',
+    ) as HTMLOptionElement | null;
+    expect(billOption?.textContent).toMatch(/EUR.*Euro/);
   });
 
   it('updates the default percent when the bill currency changes (only before user touches it)', () => {

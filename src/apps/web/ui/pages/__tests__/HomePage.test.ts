@@ -9,7 +9,7 @@ describe('HomePage', () => {
     expect(root.querySelector('[data-region="language"]')).not.toBeNull();
     expect(root.querySelector('[data-region="converter"]')).not.toBeNull();
     expect(root.querySelector('[data-region="side"]')).not.toBeNull();
-    expect(root.querySelectorAll('[data-side-tab]')).toHaveLength(3);
+    expect(root.querySelectorAll('[data-side-tab]')).toHaveLength(4);
     expect(root.querySelectorAll('[data-lang]')).toHaveLength(3);
   });
 
