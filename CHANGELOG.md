@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.2](https://github.com/Endika/converthub/compare/v1.9.1...v1.9.2) (2026-05-22)
+
+
+### Bug Fixes
+
+* **ci:** also delete the release-please head branch after auto-merge ([f73d2c1](https://github.com/Endika/converthub/commit/f73d2c138e21dbae4a168052747f7f44c6a7e7b8))
+
 ## [1.9.1](https://github.com/Endika/converthub/compare/v1.9.0...v1.9.1) (2026-05-22)
 
 
