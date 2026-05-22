@@ -49,6 +49,18 @@ export default defineConfig({
               cacheableResponse: { statuses: [0, 200] },
             },
           },
+          {
+            urlPattern: ({ url }) => url.host === 'api.frankfurter.app',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'frankfurter-api',
+              expiration: {
+                maxEntries: 5,
+                maxAgeSeconds: 24 * 60 * 60,
+              },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
         ],
       },
     }),
