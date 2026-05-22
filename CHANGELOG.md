@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.2](https://github.com/Endika/converthub/compare/v1.7.1...v1.7.2) (2026-05-22)
+
+
+### Bug Fixes
+
+* **ci:** re-trigger release-please via workflow_dispatch after auto-merge ([f38a966](https://github.com/Endika/converthub/commit/f38a9663338a86aafa407f75b0727b36bec1b135))
+
 ## [1.7.1](https://github.com/Endika/converthub/compare/v1.7.0...v1.7.1) (2026-05-22)
 
 
