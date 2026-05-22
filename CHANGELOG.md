@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/Endika/converthub/compare/v1.6.2...v1.7.0) (2026-05-22)
+
+
+### Features
+
+* **rates,tip:** money favorites chips, currency names, frankfurter provider, settings tab ([bbaf141](https://github.com/Endika/converthub/commit/bbaf14135099cca6ffebd3e0f56195c70cf2cced))
+
 ## [1.6.2](https://github.com/Endika/converthub/compare/v1.6.1...v1.6.2) (2026-05-22)
 
 
