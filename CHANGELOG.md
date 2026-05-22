@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/Endika/converthub/compare/v1.7.2...v1.8.0) (2026-05-22)
+
+
+### Features
+
+* **rates:** add open.er-api and fawazahmed0 as rate providers ([f8fbd2f](https://github.com/Endika/converthub/commit/f8fbd2f8d6db331d427144cd1ed09b8b53d518fc))
+
 ## [1.7.2](https://github.com/Endika/converthub/compare/v1.7.1...v1.7.2) (2026-05-22)
 
 
