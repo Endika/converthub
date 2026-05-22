@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.7.1](https://github.com/Endika/converthub/compare/v1.7.0...v1.7.1) (2026-05-22)
+
+
+### Bug Fixes
+
+* **ci:** delete PR branch on close regardless of merge state ([3919e1d](https://github.com/Endika/converthub/commit/3919e1d8aebab5bc6a57004f46c56019baa43456))
+* **pwa:** cache frankfurter.app responses in the service worker ([b04b144](https://github.com/Endika/converthub/commit/b04b144ee508061b87c0fc62ef2381df3ac1a311))
+* **rates:** point Frankfurter adapter to api.frankfurter.dev ([af9dca6](https://github.com/Endika/converthub/commit/af9dca6b7ab1524741ff5bc502305bfa7aa7dea4))
+
 ## [1.7.0](https://github.com/Endika/converthub/compare/v1.6.2...v1.7.0) (2026-05-22)
 
 
