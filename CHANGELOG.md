@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/Endika/converthub/compare/v1.8.0...v1.9.0) (2026-05-22)
+
+
+### Features
+
+* **ci:** deploy to Pages on release, not on every push ([ee37e8f](https://github.com/Endika/converthub/commit/ee37e8f42bd22c6a8862a21083309727bb13f0d5))
+
 ## [1.8.0](https://github.com/Endika/converthub/compare/v1.7.2...v1.8.0) (2026-05-22)
 
 
