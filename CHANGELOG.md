@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.9.5](https://github.com/Endika/converthub/compare/v1.9.4...v1.9.5) (2026-06-04)
+
+
+### Chores
+
+* **deps-dev:** bump the minor-and-patch group with 7 updates ([73cbc33](https://github.com/Endika/converthub/commit/73cbc3331bb81a96b6174322f4ba1e8edb1cbb72))
+* **deps-dev:** bump vitest in the vitest-suite group ([020b602](https://github.com/Endika/converthub/commit/020b6022dfb735d94650f2aaccf3b440d1c32ae8))
+
 ## [1.9.4](https://github.com/Endika/converthub/compare/v1.9.3...v1.9.4) (2026-05-27)
 
 
