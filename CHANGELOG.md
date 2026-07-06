@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.9.6](https://github.com/Endika/converthub/compare/v1.9.5...v1.9.6) (2026-07-06)
+
+
+### Chores
+
+* **ci:** bump actions/checkout from 6 to 7 ([#75](https://github.com/Endika/converthub/issues/75)) ([8dc7d45](https://github.com/Endika/converthub/commit/8dc7d452d4d35137a5bfb15745e0a9848f235a36))
+* **deps-dev:** bump @types/node from 25.9.3 to 26.0.1 ([#79](https://github.com/Endika/converthub/issues/79)) ([236b03a](https://github.com/Endika/converthub/commit/236b03abeca78377c94c22ad3aa1662e3c63da28))
+* **deps-dev:** bump the minor-and-patch group with 5 updates ([ed8d0e8](https://github.com/Endika/converthub/commit/ed8d0e8e143e0e77fbdc5499b6ee1532d49973a4))
+* **deps-dev:** bump the minor-and-patch group with 5 updates ([b3a1e15](https://github.com/Endika/converthub/commit/b3a1e15b952f73d3e0abdcf62976ed63155a29f1))
+* **deps-dev:** bump the minor-and-patch group with 5 updates ([3f68b2f](https://github.com/Endika/converthub/commit/3f68b2fc8b36b5a7f4a6177ecda017b4f20b5bfc))
+* **deps-dev:** bump the minor-and-patch group with 8 updates ([374ecaa](https://github.com/Endika/converthub/commit/374ecaac9e566d08a0d71014c580a3fa150ace10))
+* **deps-dev:** bump vitest in the vitest-suite group ([4911d5d](https://github.com/Endika/converthub/commit/4911d5d68fc49c89487a11cd9fb372fd7a7abb8d))
+
 ## [1.9.5](https://github.com/Endika/converthub/compare/v1.9.4...v1.9.5) (2026-06-04)
 
 
