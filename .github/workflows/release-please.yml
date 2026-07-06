@@ -25,18 +25,9 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
-      # Enable GitHub native auto-merge on the release PR and stop. GitHub waits
-      # for the required checks (quality/test/build) and rebase-merges when they
-      # go green. That merge is a push to main by RELEASE_PLEASE_TOKEN (a PAT),
-      # which re-triggers this workflow so release-please creates the tag and the
-      # GitHub release on the follow-up run. The release branch is cleaned up by
-      # the "Delete closed PR branch" workflow after the merge.
-      #
-      # Do NOT wait-then-delete-then-redispatch here: enabling auto-merge returns
-      # immediately, so a short wait would delete the branch before the checks
-      # finish, cancelling the merge, closing the PR and self-dispatching into an
-      # infinite create/close loop. If auto-merge cannot complete, the PR simply
-      # stays open awaiting checks -- the safe outcome.
+      # Enable native auto-merge and stop; GitHub rebase-merges once the required
+      # checks pass, and that PAT-authored merge re-triggers this workflow to cut
+      # the tag/release.
       - if: ${{ steps.release.outputs.pr }}
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
