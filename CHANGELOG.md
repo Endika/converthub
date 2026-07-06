@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.7](https://github.com/Endika/converthub/compare/v1.9.6...v1.9.7) (2026-07-06)
+
+
+### Chores
+
+* **ci:** drop redundant deploy dispatch from release flow ([9abae3f](https://github.com/Endika/converthub/commit/9abae3f8cf96353685796cd1366ef903ebe005ea))
+
 ## [1.9.6](https://github.com/Endika/converthub/compare/v1.9.5...v1.9.6) (2026-07-06)
 
 
