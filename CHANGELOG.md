@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.9.8](https://github.com/Endika/converthub/compare/v1.9.7...v1.9.8) (2026-07-13)
+
+
+### Bug Fixes
+
+* prevent accidental pinch and double-tap zoom on mobile ([f59d8d1](https://github.com/Endika/converthub/commit/f59d8d1b6debc965040b8ac6b18c76afd01ba0be))
+
+
+### Chores
+
+* **deps-dev:** bump the minor-and-patch group with 6 updates ([eb66a76](https://github.com/Endika/converthub/commit/eb66a76af3d14779cd004b06e110b47d7ae72064))
+* **deps-dev:** bump vitest in the vitest-suite group ([b69dd14](https://github.com/Endika/converthub/commit/b69dd140d887ee337f22e7c6b4dec5f69d4d81b4))
+
 ## [1.9.7](https://github.com/Endika/converthub/compare/v1.9.6...v1.9.7) (2026-07-06)
 
 
