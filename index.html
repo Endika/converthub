@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="theme-color" content="#6366f1" />
     <meta
@@ -52,6 +52,18 @@
         font-weight: bold;
       }
     </style>
+    <style>
+      /* Prevent accidental zoom on mobile: block double-tap zoom, keep scroll/tap. */
+      html {
+        touch-action: manipulation;
+      }
+    </style>
+    <script>
+      // iOS Safari ignores user-scalable=no, so block pinch-zoom explicitly.
+      document.addEventListener('gesturestart', function (e) {
+        e.preventDefault()
+      })
+    </script>
   </head>
 
   <body>
