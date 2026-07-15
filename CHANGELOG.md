@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.9.9](https://github.com/Endika/converthub/compare/v1.9.8...v1.9.9) (2026-07-15)
+
+
+### Chores
+
+* **ci:** bump actions/setup-node from 6 to 7 ([68841ff](https://github.com/Endika/converthub/commit/68841ff2c87badc46badb3c5fcaf13b752996d98))
+* **deps-dev:** bump the minor-and-patch group with 7 updates ([af0727a](https://github.com/Endika/converthub/commit/af0727ae484efb1b3db901a11798012854847dae))
+
 ## [1.9.8](https://github.com/Endika/converthub/compare/v1.9.7...v1.9.8) (2026-07-13)
 
 
