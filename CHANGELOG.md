@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.9.10](https://github.com/Endika/converthub/compare/v1.9.9...v1.9.10) (2026-08-04)
+
+
+### Chores
+
+* **deps-dev:** bump fast-uri from 3.1.2 to 3.1.5 ([515e724](https://github.com/Endika/converthub/commit/515e72473de448f019ce9e6f9e62058626ba8204))
+* **deps-dev:** bump postcss from 8.5.21 to 8.5.25 ([6759bf3](https://github.com/Endika/converthub/commit/6759bf3690e56eb1e13db3266c18b901ec0dd09b))
+* **deps-dev:** bump the minor-and-patch group with 4 updates ([434f717](https://github.com/Endika/converthub/commit/434f7177a2cced53afd231daf21897fb07695b3e))
+* **deps-dev:** bump the minor-and-patch group with 5 updates ([4adb9c0](https://github.com/Endika/converthub/commit/4adb9c0d4f853939b2c975739d5ca7f0b9d7357a))
+* **deps:** bump brace-expansion ([4bcee26](https://github.com/Endika/converthub/commit/4bcee26e9d80d6864deae26a9dab4a92a4d6f3cb))
+
 ## [1.9.9](https://github.com/Endika/converthub/compare/v1.9.8...v1.9.9) (2026-07-15)
 
 
