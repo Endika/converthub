@@ -9,6 +9,10 @@ updates:
       prefix: 'chore(deps)'
       prefix-development: 'chore(deps-dev)'
     groups:
+      security-npm:
+        applies-to: security-updates
+        patterns:
+          - "*"
       vitest-suite:
         applies-to: version-updates
         patterns:
@@ -32,6 +36,10 @@ updates:
     commit-message:
       prefix: 'chore(ci)'
     groups:
+      security-actions:
+        applies-to: security-updates
+        patterns:
+          - "*"
       minor-and-patch:
         applies-to: version-updates
         update-types:
