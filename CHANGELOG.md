@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.11](https://github.com/Endika/converthub/compare/v1.9.10...v1.9.11) (2026-08-04)
+
+
+### Bug Fixes
+
+* override @babel/core to 7.29.6 to clear the workbox-build transitive copy ([d5d6090](https://github.com/Endika/converthub/commit/d5d60904f31f89ba83023fababda191993a17387))
+
 ## [1.9.10](https://github.com/Endika/converthub/compare/v1.9.9...v1.9.10) (2026-08-04)
 
 
