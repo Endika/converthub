@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.13](https://github.com/Endika/converthub/compare/v1.9.12...v1.9.13) (2026-09-05)
+
+
+### Chores
+
+* fail the lint gate on warnings ([fb1d9ca](https://github.com/Endika/converthub/commit/fb1d9ca23ae166fbee84d65f1cef11dc44f79d95))
+
 ## [1.9.12](https://github.com/Endika/converthub/compare/v1.9.11...v1.9.12) (2026-09-05)
 
 
