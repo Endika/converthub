@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.9.12](https://github.com/Endika/converthub/compare/v1.9.11...v1.9.12) (2026-09-05)
+
+
+### Chores
+
+* **deps-dev:** bump browserslist ([cbd8461](https://github.com/Endika/converthub/commit/cbd8461fdbf2556df05d04445bd1c6f610d81118))
+* **deps-dev:** bump fast-uri ([eb4d1ac](https://github.com/Endika/converthub/commit/eb4d1ac82c8458fd331eb702c2e54df1a7d4497a))
+* **deps-dev:** bump the minor-and-patch group with 2 updates ([2911ef9](https://github.com/Endika/converthub/commit/2911ef9bdd3ae025c8eb20e0939a1dffe53159a5))
+* **deps-dev:** bump the minor-and-patch group with 5 updates ([abf2c1f](https://github.com/Endika/converthub/commit/abf2c1f710d3f0fa14ce24f4d857629b6e34701a))
+* **deps-dev:** bump the minor-and-patch group with 6 updates ([ccc7a7d](https://github.com/Endika/converthub/commit/ccc7a7df3cd01f8bea1ae62dda4d8f131e675817))
+* **deps-dev:** bump the minor-and-patch group with 7 updates ([4b02563](https://github.com/Endika/converthub/commit/4b02563123b8c153be4daecd3fc53db47849eecd))
+* **deps-dev:** bump vitest in the vitest-suite group ([1c4ffb5](https://github.com/Endika/converthub/commit/1c4ffb5d97db567efa9ce30ccafc3d3cd5788501))
+
 ## [1.9.11](https://github.com/Endika/converthub/compare/v1.9.10...v1.9.11) (2026-08-04)
 
 
