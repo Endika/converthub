@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.14](https://github.com/Endika/converthub/compare/v1.9.13...v1.9.14) (2026-09-05)
+
+
+### Chores
+
+* make the pre-commit hook fail on failures ([2066239](https://github.com/Endika/converthub/commit/20662390b8197576f8342b84f1bc9c8c8351d575))
+
 ## [1.9.13](https://github.com/Endika/converthub/compare/v1.9.12...v1.9.13) (2026-09-05)
 
 
