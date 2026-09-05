@@ -51,7 +51,7 @@ Open-source, MIT licensed. PRs welcome.
 ```bash
 npm install
 npm run dev             # dev server
-npm test                # unit + integration (vitest)
+npm run test:run        # unit + integration (vitest)
 npm run e2e             # end-to-end (playwright)
 npm run build           # production build with service worker
 ```

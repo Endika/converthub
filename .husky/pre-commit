@@ -27,7 +27,7 @@ fi
 # Type checking
 if [ -n "$TS_FILES" ]; then
   echo "📝 Type checking..."
-  npm run type-check || {
+  npm run type:check || {
     echo "❌ Type check failed. Please fix errors before committing."
     exit 1
   }
