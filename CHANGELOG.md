@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.15](https://github.com/Endika/converthub/compare/v1.9.14...v1.9.15) (2026-09-09)
+
+
+### Chores
+
+* **deps-dev:** bump the minor-and-patch group with 6 updates ([a55fc3c](https://github.com/Endika/converthub/commit/a55fc3ccb0691faffcc2aad6bcdb92a857d4b1dd))
+
 ## [1.9.14](https://github.com/Endika/converthub/compare/v1.9.13...v1.9.14) (2026-09-05)
 
 
