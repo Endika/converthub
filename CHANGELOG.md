@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.9.16](https://github.com/Endika/converthub/compare/v1.9.15...v1.9.16) (2026-09-09)
+
+
+### Chores
+
+* **deps-dev:** bump @vitest/coverage-v8 and @vitest/ui to 5.0.0 ([14fbf0f](https://github.com/Endika/converthub/commit/14fbf0faf3f4caeaaf47c9527df4a44a7ae23806))
+* **deps-dev:** bump vitest ([7bafea2](https://github.com/Endika/converthub/commit/7bafea22fb22c13146cc52d76466e9e5561ee412))
+
 ## [1.9.15](https://github.com/Endika/converthub/compare/v1.9.14...v1.9.15) (2026-09-09)
 
 
