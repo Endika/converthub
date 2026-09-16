@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/Endika/converthub/compare/v1.9.16...v1.10.0) (2026-09-16)
+
+
+### Features
+
+* **ci:** block PRs that introduce high-severity dependency advisories ([46430ff](https://github.com/Endika/converthub/commit/46430ff3ea02062fc67d92ad1d4b12671b400c9f))
+
 ## [1.9.16](https://github.com/Endika/converthub/compare/v1.9.15...v1.9.16) (2026-09-09)
 
 
