@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/Endika/converthub/compare/v1.10.0...v1.11.0) (2026-09-16)
+
+
+### Features
+
+* **ci:** add CodeQL static analysis ([5a92b62](https://github.com/Endika/converthub/commit/5a92b62acc7345213a7d8f26f93ab7cd19b47826))
+
 ## [1.10.0](https://github.com/Endika/converthub/compare/v1.9.16...v1.10.0) (2026-09-16)
 
 
