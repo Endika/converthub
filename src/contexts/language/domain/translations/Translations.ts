@@ -56,6 +56,7 @@ export interface Translations {
   note_text_placeholder: string;
   note_location_placeholder: string;
   notes_full: string;
+  save_failed: string;
   favorites_empty: string;
   notes_empty: string;
   history_empty: string;

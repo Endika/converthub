@@ -1,16 +1,27 @@
 import { describe, expect, it } from 'vitest';
-import { isErr, isOk } from '../../../../../shared-kernel/domain/Result';
+import {
+  err,
+  isErr,
+  isOk,
+  ok,
+} from '../../../../../shared-kernel/domain/Result';
+import { StorageWriteError } from '../../../../../shared-kernel/domain/StorageWriteError';
 import { FavoritesFullError } from '../../errors/FavoritesFullError';
 import { Favorite } from '../../model/Favorite';
 import type { FavoritesRepositoryPort } from '../../ports/out/FavoritesRepositoryPort';
 import { FavoritesService } from '../FavoritesService';
 
-const buildRepo = (initial: Favorite[] = []): FavoritesRepositoryPort => {
+const buildRepo = (
+  initial: Favorite[] = [],
+  failSave = false,
+): FavoritesRepositoryPort => {
   let state = initial;
   return {
     loadAll: () => [...state],
     saveAll: (favorites) => {
+      if (failSave) return err(new StorageWriteError());
       state = [...favorites];
+      return ok(undefined);
     },
   };
 };
@@ -56,5 +67,12 @@ describe('FavoritesService', () => {
     const service = new FavoritesService(repo);
     service.remove('missing');
     expect(service.list()).toHaveLength(1);
+  });
+
+  it('reports a StorageWriteError instead of claiming a favorite was added', () => {
+    const service = new FavoritesService(buildRepo([], true));
+    const r = service.add(sample('a'));
+    expect(isErr(r)).toBe(true);
+    if (isErr(r)) expect(r.error).toBeInstanceOf(StorageWriteError);
   });
 });

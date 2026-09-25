@@ -1,7 +1,8 @@
 import type { Result } from '../../../../../shared-kernel/domain/Result';
+import type { StorageWriteError } from '../../../../../shared-kernel/domain/StorageWriteError';
 import type { NotesFullError } from '../../errors/NotesFullError';
 import type { TravelNote } from '../../model/TravelNote';
 
 export interface AddNotePort {
-  execute(note: TravelNote): Result<void, NotesFullError>;
+  execute(note: TravelNote): Result<void, NotesFullError | StorageWriteError>;
 }

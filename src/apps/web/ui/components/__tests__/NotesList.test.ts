@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { err, ok } from '../../../../../shared-kernel/domain/Result';
+import { StorageWriteError } from '../../../../../shared-kernel/domain/StorageWriteError';
 import { LanguageCode } from '../../../../../contexts/language/domain/model/LanguageCode';
 import { LanguageService } from '../../../../../contexts/language/domain/services/LanguageService';
 import { AddNoteUseCase } from '../../../../../contexts/notes/application/AddNoteUseCase';
@@ -10,12 +12,17 @@ import type { NotesRepositoryPort } from '../../../../../contexts/notes/domain/p
 import { NotesService } from '../../../../../contexts/notes/domain/services/NotesService';
 import { NotesList } from '../NotesList';
 
-const buildRepo = (initial: TravelNote[] = []): NotesRepositoryPort => {
+const buildRepo = (
+  initial: TravelNote[] = [],
+  failSave = false,
+): NotesRepositoryPort => {
   let state = [...initial];
   return {
     loadAll: () => [...state],
     saveAll: (items) => {
+      if (failSave) return err(new StorageWriteError());
       state = [...items];
+      return ok(undefined);
     },
   };
 };
@@ -23,10 +30,11 @@ const buildRepo = (initial: TravelNote[] = []): NotesRepositoryPort => {
 const mount = (
   initial: TravelNote[] = [],
   maxItems = 50,
+  failSave = false,
 ): { root: HTMLElement; repo: NotesRepositoryPort } => {
   const root = document.createElement('div');
   const language = new LanguageService(LanguageCode.fromTrusted('en'));
-  const repo = buildRepo(initial);
+  const repo = buildRepo(initial, failSave);
   const service = new NotesService(repo, maxItems);
   new NotesList(
     root,
@@ -92,6 +100,36 @@ describe('NotesList', () => {
     expect(
       root.querySelector('[data-region="error"]')?.textContent?.toLowerCase(),
     ).toContain('limit');
+  });
+
+  it('shows a save-failed error and keeps the typed note when storage write fails', () => {
+    const { root } = mount([], 50, true);
+    const form = root.querySelector<HTMLFormElement>('form[data-action="add"]');
+    if (form === null) throw new Error('add form missing');
+    submitForm(form, 'unsaved note');
+    expect(
+      root.querySelector('[data-region="error"]')?.textContent?.toLowerCase(),
+    ).toContain("couldn't save");
+    expect(root.querySelectorAll('[data-id]')).toHaveLength(0);
+  });
+
+  it('shows a save-failed error and stays in edit mode when the update write fails', () => {
+    const note = TravelNote.create({ text: 'old', location: null });
+    const { root, repo } = mount([note], 50, true);
+    root.querySelector<HTMLButtonElement>('[data-action="edit"]')?.click();
+    const editForm = root.querySelector<HTMLFormElement>(
+      'form[data-action="update"]',
+    );
+    if (editForm === null) throw new Error('edit form missing');
+    (editForm.elements.namedItem('text') as HTMLInputElement).value = 'new';
+    editForm.dispatchEvent(
+      new Event('submit', { cancelable: true, bubbles: true }),
+    );
+    expect(
+      editForm.querySelector('[data-region="error"]')?.textContent,
+    ).toBeTruthy();
+    expect(repo.loadAll()[0]?.text).toBe('old');
+    expect(root.querySelector('form[data-action="update"]')).not.toBeNull();
   });
 
   it('deletes a note via the remove action', () => {

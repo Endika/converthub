@@ -1,4 +1,5 @@
-import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
+import { err, type Result } from '../../../../shared-kernel/domain/Result';
+import type { StorageWriteError } from '../../../../shared-kernel/domain/StorageWriteError';
 import { FavoritesFullError } from '../errors/FavoritesFullError';
 import type { Favorite } from '../model/Favorite';
 import type { FavoritesRepositoryPort } from '../ports/out/FavoritesRepositoryPort';
@@ -11,13 +12,14 @@ export class FavoritesService {
     private readonly maxItems: number = MAX_FAVORITES,
   ) {}
 
-  add(favorite: Favorite): Result<void, FavoritesFullError> {
+  add(
+    favorite: Favorite,
+  ): Result<void, FavoritesFullError | StorageWriteError> {
     const current = this.repository.loadAll();
     if (current.length >= this.maxItems) {
       return err(new FavoritesFullError(this.maxItems));
     }
-    this.repository.saveAll([favorite, ...current]);
-    return ok(undefined);
+    return this.repository.saveAll([favorite, ...current]);
   }
 
   remove(id: string): void {

@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { ok } from '../../../../../shared-kernel/domain/Result';
 import { ClearHistoryUseCase } from '../../../../../contexts/history/application/ClearHistoryUseCase';
 import { GetHistoryUseCase } from '../../../../../contexts/history/application/GetHistoryUseCase';
 import { ConversionEntry } from '../../../../../contexts/history/domain/model/ConversionEntry';
@@ -14,6 +15,7 @@ const buildRepo = (initial: ConversionEntry[] = []): HistoryRepositoryPort => {
     loadAll: () => [...state],
     saveAll: (entries) => {
       state = [...entries];
+      return ok(undefined);
     },
   };
 };

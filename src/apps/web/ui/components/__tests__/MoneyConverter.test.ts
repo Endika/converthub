@@ -30,6 +30,7 @@ import { UnpinCurrencyUseCase } from '../../../../../contexts/pinned-currencies/
 import { PinnedCurrency } from '../../../../../contexts/pinned-currencies/domain/model/PinnedCurrency';
 import type { PinnedCurrenciesRepositoryPort } from '../../../../../contexts/pinned-currencies/domain/ports/out/PinnedCurrenciesRepositoryPort';
 import { PinningService } from '../../../../../contexts/pinned-currencies/domain/services/PinningService';
+import { StorageWriteError } from '../../../../../shared-kernel/domain/StorageWriteError';
 import {
   MoneyConverter,
   type MoneyConverterCallbacks,
@@ -51,6 +52,7 @@ const buildHistoryRepo = (): HistoryRepositoryPort => {
     saveAll: (entries) => {
       state.length = 0;
       state.push(...entries);
+      return ok(undefined);
     },
   };
 };
@@ -69,6 +71,8 @@ interface MountOptions {
   callbacks?: MoneyConverterCallbacks;
   pinned?: readonly string[];
   maxPinned?: number;
+  failPinSave?: boolean;
+  failFavoriteSave?: boolean;
 }
 
 interface Mounted {
@@ -110,7 +114,9 @@ const mount = (options: MountOptions = {}): Mounted => {
     return {
       loadAll: () => [...state],
       saveAll: (items) => {
+        if (options.failPinSave === true) return err(new StorageWriteError());
         state = [...items];
+        return ok(undefined);
       },
     };
   })();
@@ -126,7 +132,10 @@ const mount = (options: MountOptions = {}): Mounted => {
     return {
       loadAll: () => [...state],
       saveAll: (items) => {
+        if (options.failFavoriteSave === true)
+          return err(new StorageWriteError());
         state = [...items];
+        return ok(undefined);
       },
     };
   })();
@@ -426,6 +435,14 @@ describe('MoneyConverter', () => {
       const result = root.querySelector('.converter__result')?.textContent;
       expect(result?.toLowerCase()).toContain('full');
     });
+
+    it('shows a save-failed message, not pin_full, when storage write fails', () => {
+      const { root } = mount({ failPinSave: true });
+      const btn = root.querySelector<HTMLButtonElement>('[data-pin="from"]');
+      btn?.click();
+      const result = root.querySelector('.converter__result')?.textContent;
+      expect(result?.toLowerCase()).toContain("couldn't save");
+    });
   });
 
   describe('save as favorite', () => {
@@ -493,6 +510,16 @@ describe('MoneyConverter', () => {
       const fav = favoritesRepo.loadAll()[0];
       expect(fav?.label).toBe('USD → EUR');
       expect(fav?.amount).toBeNull();
+    });
+
+    it('shows a save-failed message when storage write fails', () => {
+      const { root } = mount({ failFavoriteSave: true });
+      submitOnce(root, '100');
+      root
+        .querySelector<HTMLButtonElement>('[data-action="save-favorite"]')
+        ?.click();
+      const result = root.querySelector('.converter__result')?.textContent;
+      expect(result?.toLowerCase()).toContain("couldn't save");
     });
   });
 

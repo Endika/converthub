@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { ok } from '../../../../../shared-kernel/domain/Result';
 import { ConvertDistanceUseCase } from '../../../../../contexts/conversion/application/ConvertDistanceUseCase';
 import { DistanceConversionService } from '../../../../../contexts/conversion/domain/services/DistanceConversionService';
 import { AddToHistoryUseCase } from '../../../../../contexts/history/application/AddToHistoryUseCase';
@@ -23,6 +24,7 @@ const buildHistoryRepo = (): HistoryRepositoryPort => {
     saveAll: (entries) => {
       state.length = 0;
       state.push(...entries);
+      return ok(undefined);
     },
   };
 };

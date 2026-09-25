@@ -1,17 +1,28 @@
 import { describe, expect, it } from 'vitest';
-import { isErr, isOk } from '../../../../../shared-kernel/domain/Result';
+import {
+  err,
+  isErr,
+  isOk,
+  ok,
+} from '../../../../../shared-kernel/domain/Result';
+import { StorageWriteError } from '../../../../../shared-kernel/domain/StorageWriteError';
 import { NoteNotFoundError } from '../../errors/NoteNotFoundError';
 import { NotesFullError } from '../../errors/NotesFullError';
 import { TravelNote } from '../../model/TravelNote';
 import type { NotesRepositoryPort } from '../../ports/out/NotesRepositoryPort';
 import { NotesService } from '../NotesService';
 
-const buildRepo = (initial: TravelNote[] = []): NotesRepositoryPort => {
+const buildRepo = (
+  initial: TravelNote[] = [],
+  failSave = false,
+): NotesRepositoryPort => {
   let state = initial;
   return {
     loadAll: () => [...state],
     saveAll: (notes) => {
+      if (failSave) return err(new StorageWriteError());
       state = [...notes];
+      return ok(undefined);
     },
   };
 };
@@ -65,5 +76,19 @@ describe('NotesService', () => {
     );
     service.remove('a');
     expect(service.list().map((n) => n.id)).toEqual(['b']);
+  });
+
+  it('reports a StorageWriteError instead of claiming a note was added', () => {
+    const service = new NotesService(buildRepo([], true));
+    const r = service.add(note('a', 'hello'));
+    expect(isErr(r)).toBe(true);
+    if (isErr(r)) expect(r.error).toBeInstanceOf(StorageWriteError);
+  });
+
+  it('reports a StorageWriteError instead of claiming a note was updated', () => {
+    const service = new NotesService(buildRepo([note('a', 'old')], true));
+    const r = service.update('a', 'new');
+    expect(isErr(r)).toBe(true);
+    if (isErr(r)) expect(r.error).toBeInstanceOf(StorageWriteError);
   });
 });

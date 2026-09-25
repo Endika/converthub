@@ -24,6 +24,7 @@ const buildRepo = (initial: Favorite[] = []): FavoritesRepositoryPort => {
     loadAll: () => [...state],
     saveAll: (items) => {
       state = [...items];
+      return ok(undefined);
     },
   };
 };

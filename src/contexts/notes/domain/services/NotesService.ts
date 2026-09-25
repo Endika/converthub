@@ -1,4 +1,10 @@
-import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
+import {
+  err,
+  isErr,
+  ok,
+  type Result,
+} from '../../../../shared-kernel/domain/Result';
+import type { StorageWriteError } from '../../../../shared-kernel/domain/StorageWriteError';
 import { NoteNotFoundError } from '../errors/NoteNotFoundError';
 import { NotesFullError } from '../errors/NotesFullError';
 import type { TravelNote } from '../model/TravelNote';
@@ -12,21 +18,26 @@ export class NotesService {
     private readonly maxItems: number = MAX_NOTES,
   ) {}
 
-  add(note: TravelNote): Result<void, NotesFullError> {
+  add(note: TravelNote): Result<void, NotesFullError | StorageWriteError> {
     const current = this.repository.loadAll();
     if (current.length >= this.maxItems) {
       return err(new NotesFullError(this.maxItems));
     }
-    this.repository.saveAll([note, ...current]);
-    return ok(undefined);
+    return this.repository.saveAll([note, ...current]);
   }
 
-  update(id: string, text: string): Result<TravelNote, NoteNotFoundError> {
+  update(
+    id: string,
+    text: string,
+  ): Result<TravelNote, NoteNotFoundError | StorageWriteError> {
     const current = this.repository.loadAll();
     const existing = current.find((n) => n.id === id);
     if (existing === undefined) return err(new NoteNotFoundError(id));
     const updated = existing.withText(text);
-    this.repository.saveAll(current.map((n) => (n.id === id ? updated : n)));
+    const saved = this.repository.saveAll(
+      current.map((n) => (n.id === id ? updated : n)),
+    );
+    if (isErr(saved)) return saved;
     return ok(updated);
   }
 

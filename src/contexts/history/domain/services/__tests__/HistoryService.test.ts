@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { ok } from '../../../../../shared-kernel/domain/Result';
 import { ConversionEntry } from '../../model/ConversionEntry';
 import type { HistoryRepositoryPort } from '../../ports/out/HistoryRepositoryPort';
 import { HistoryService } from '../HistoryService';
@@ -9,6 +10,7 @@ const buildRepo = (initial: ConversionEntry[] = []): HistoryRepositoryPort => {
     loadAll: () => [...state],
     saveAll: (entries) => {
       state = [...entries];
+      return ok(undefined);
     },
   };
 };
