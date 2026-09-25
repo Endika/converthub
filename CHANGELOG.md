@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.1](https://github.com/Endika/converthub/compare/v1.11.0...v1.11.1) (2026-09-25)
+
+
+### Bug Fixes
+
+* guard stored formats and report failed saves ([7e5cf66](https://github.com/Endika/converthub/commit/7e5cf66f42692c8dbdb1ced782d586fbb36cc8d8))
+
 ## [1.11.0](https://github.com/Endika/converthub/compare/v1.10.0...v1.11.0) (2026-09-16)
 
 
