@@ -4,6 +4,8 @@ import {
   type ConversionType,
 } from '../../domain/model/ConversionEntry';
 import type { HistoryRepositoryPort } from '../../domain/ports/out/HistoryRepositoryPort';
+import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
+import { StorageWriteError } from '../../../../shared-kernel/domain/StorageWriteError';
 
 const STORAGE_KEY = 'converthub:history';
 
@@ -59,9 +61,9 @@ export class LocalStorageHistoryRepository implements HistoryRepositoryPort {
   constructor(private readonly storage: Storage = localStorage) {}
 
   loadAll(): ConversionEntry[] {
-    const raw = this.storage.getItem(STORAGE_KEY);
-    if (raw === null) return [];
     try {
+      const raw = this.storage.getItem(STORAGE_KEY);
+      if (raw === null) return [];
       const parsed: unknown = JSON.parse(raw);
       if (!Array.isArray(parsed)) return [];
       return parsed.filter(isPersistedEntry).map(toEntity);
@@ -70,7 +72,17 @@ export class LocalStorageHistoryRepository implements HistoryRepositoryPort {
     }
   }
 
-  saveAll(entries: readonly ConversionEntry[]): void {
-    this.storage.setItem(STORAGE_KEY, JSON.stringify(entries.map(toPersisted)));
+  saveAll(
+    entries: readonly ConversionEntry[],
+  ): Result<void, StorageWriteError> {
+    try {
+      this.storage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(entries.map(toPersisted)),
+      );
+      return ok(undefined);
+    } catch {
+      return err(new StorageWriteError());
+    }
   }
 }

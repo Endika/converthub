@@ -1,5 +1,7 @@
 import { TravelNote } from '../../domain/model/TravelNote';
 import type { NotesRepositoryPort } from '../../domain/ports/out/NotesRepositoryPort';
+import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
+import { StorageWriteError } from '../../../../shared-kernel/domain/StorageWriteError';
 
 const STORAGE_KEY = 'converthub:notes';
 
@@ -39,9 +41,9 @@ export class LocalStorageNotesRepository implements NotesRepositoryPort {
   constructor(private readonly storage: Storage = localStorage) {}
 
   loadAll(): TravelNote[] {
-    const raw = this.storage.getItem(STORAGE_KEY);
-    if (raw === null) return [];
     try {
+      const raw = this.storage.getItem(STORAGE_KEY);
+      if (raw === null) return [];
       const parsed: unknown = JSON.parse(raw);
       if (!Array.isArray(parsed)) return [];
       return parsed.filter(isPersistedNote).map(toEntity);
@@ -50,7 +52,12 @@ export class LocalStorageNotesRepository implements NotesRepositoryPort {
     }
   }
 
-  saveAll(notes: readonly TravelNote[]): void {
-    this.storage.setItem(STORAGE_KEY, JSON.stringify(notes.map(toPersisted)));
+  saveAll(notes: readonly TravelNote[]): Result<void, StorageWriteError> {
+    try {
+      this.storage.setItem(STORAGE_KEY, JSON.stringify(notes.map(toPersisted)));
+      return ok(undefined);
+    } catch {
+      return err(new StorageWriteError());
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
+import { ok } from '../../../../../shared-kernel/domain/Result';
 import { CalculateTipUseCase } from '../../../../../contexts/tipping/application/CalculateTipUseCase';
 import { GetFavoritesUseCase } from '../../../../../contexts/favorites/application/GetFavoritesUseCase';
 import { Favorite } from '../../../../../contexts/favorites/domain/model/Favorite';
@@ -26,6 +27,7 @@ const buildFavoritesRepo = (
     loadAll: () => [...state],
     saveAll: (next) => {
       state = [...next];
+      return ok(undefined);
     },
   };
 };

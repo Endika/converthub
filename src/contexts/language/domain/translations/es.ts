@@ -58,6 +58,7 @@ const es: Translations = {
   note_text_placeholder: 'Añade una nota…',
   note_location_placeholder: 'Ubicación',
   notes_full: 'Límite de notas alcanzado',
+  save_failed: 'No se pudo guardar. Inténtalo de nuevo.',
   favorites_empty: 'Aún no hay favoritos',
   notes_empty: 'Aún no hay notas',
   history_empty: 'Aún no hay conversiones',

@@ -3,6 +3,7 @@ import { RateNotAvailableError } from '../../../../contexts/conversion/domain/er
 import { SUPPORTED_CURRENCIES } from '../../../../contexts/conversion/domain/model/catalogs/currencies';
 import type { UpdateExchangeRatesUseCase } from '../../../../contexts/exchange-rate/application/UpdateExchangeRatesUseCase';
 import type { AddFavoriteUseCase } from '../../../../contexts/favorites/application/AddFavoriteUseCase';
+import { FavoritesFullError } from '../../../../contexts/favorites/domain/errors/FavoritesFullError';
 import { Favorite } from '../../../../contexts/favorites/domain/model/Favorite';
 import type { AddToHistoryUseCase } from '../../../../contexts/history/application/AddToHistoryUseCase';
 import { ConversionEntry } from '../../../../contexts/history/domain/model/ConversionEntry';
@@ -11,6 +12,7 @@ import type { TranslationKey } from '../../../../contexts/language/domain/transl
 import type { GetPinnedCurrenciesUseCase } from '../../../../contexts/pinned-currencies/application/GetPinnedCurrenciesUseCase';
 import type { PinCurrencyUseCase } from '../../../../contexts/pinned-currencies/application/PinCurrencyUseCase';
 import type { UnpinCurrencyUseCase } from '../../../../contexts/pinned-currencies/application/UnpinCurrencyUseCase';
+import { PinnedCurrenciesFullError } from '../../../../contexts/pinned-currencies/domain/errors/PinnedCurrenciesFullError';
 import { isErr, isOk } from '../../../../shared-kernel/domain/Result';
 import { formatAmount } from '../format';
 
@@ -271,7 +273,11 @@ export class MoneyConverter {
     } else {
       const result = this.deps.pinCurrency.execute(code);
       if (isErr(result)) {
-        this.resultEl.textContent = this.languageService.translate('pin_full');
+        this.resultEl.textContent = this.languageService.translate(
+          result.error instanceof PinnedCurrenciesFullError
+            ? 'pin_full'
+            : 'save_failed',
+        );
         return;
       }
     }
@@ -381,7 +387,9 @@ export class MoneyConverter {
       }),
     );
     if (isErr(result)) {
-      this.resultEl.textContent = this.languageService.translate('pin_full');
+      this.resultEl.textContent = this.languageService.translate(
+        result.error instanceof FavoritesFullError ? 'pin_full' : 'save_failed',
+      );
       return;
     }
     this.callbacks.onFavoriteSaved?.();

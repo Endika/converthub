@@ -1,4 +1,5 @@
 import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
+import type { StorageWriteError } from '../../../../shared-kernel/domain/StorageWriteError';
 import { PinnedCurrenciesFullError } from '../errors/PinnedCurrenciesFullError';
 import { PinnedCurrency } from '../model/PinnedCurrency';
 import type { PinnedCurrenciesRepositoryPort } from '../ports/out/PinnedCurrenciesRepositoryPort';
@@ -11,14 +12,15 @@ export class PinningService {
     private readonly maxItems: number = MAX_PINNED_CURRENCIES,
   ) {}
 
-  pin(code: string): Result<void, PinnedCurrenciesFullError> {
+  pin(
+    code: string,
+  ): Result<void, PinnedCurrenciesFullError | StorageWriteError> {
     const current = this.repository.loadAll();
     if (current.some((p) => p.code === code)) return ok(undefined);
     if (current.length >= this.maxItems) {
       return err(new PinnedCurrenciesFullError(this.maxItems));
     }
-    this.repository.saveAll([new PinnedCurrency(code), ...current]);
-    return ok(undefined);
+    return this.repository.saveAll([new PinnedCurrency(code), ...current]);
   }
 
   unpin(code: string): void {

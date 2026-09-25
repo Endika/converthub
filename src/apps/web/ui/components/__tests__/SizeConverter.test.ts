@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { ok } from '../../../../../shared-kernel/domain/Result';
 import { ConvertSizeUseCase } from '../../../../../contexts/conversion/application/ConvertSizeUseCase';
 import { SizeConversionService } from '../../../../../contexts/conversion/domain/services/SizeConversionService';
 import { AddToHistoryUseCase } from '../../../../../contexts/history/application/AddToHistoryUseCase';
@@ -15,6 +16,7 @@ const buildHistoryRepo = (): HistoryRepositoryPort => {
     saveAll: (entries) => {
       state.length = 0;
       state.push(...entries);
+      return ok(undefined);
     },
   };
 };

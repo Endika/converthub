@@ -2,6 +2,7 @@ import type { AddNoteUseCase } from '../../../../contexts/notes/application/AddN
 import type { DeleteNoteUseCase } from '../../../../contexts/notes/application/DeleteNoteUseCase';
 import type { GetNotesUseCase } from '../../../../contexts/notes/application/GetNotesUseCase';
 import type { UpdateNoteUseCase } from '../../../../contexts/notes/application/UpdateNoteUseCase';
+import { NotesFullError } from '../../../../contexts/notes/domain/errors/NotesFullError';
 import { TravelNote } from '../../../../contexts/notes/domain/model/TravelNote';
 import type { LanguageService } from '../../../../contexts/language/domain/services/LanguageService';
 import type { TranslationKey } from '../../../../contexts/language/domain/translations/Translations';
@@ -73,6 +74,7 @@ export class NotesList {
             <input type="text" name="text" value="${escapeHtml(n.text)}" required />
             <button type="submit" class="btn btn--primary btn--small">${t('common_save')}</button>
             <button type="button" class="btn btn--ghost btn--small" data-action="cancel">×</button>
+            <span class="note-form__error" data-region="error"></span>
           </form>
         </li>
       `;
@@ -113,7 +115,13 @@ export class NotesList {
         const errorEl = this.root.querySelector<HTMLElement>(
           '[data-region="error"]',
         );
-        if (errorEl !== null) errorEl.textContent = t('notes_full');
+        if (errorEl !== null) {
+          errorEl.textContent = t(
+            result.error instanceof NotesFullError
+              ? 'notes_full'
+              : 'save_failed',
+          );
+        }
         return;
       }
       this.render();
@@ -151,13 +159,17 @@ export class NotesList {
           const input = form.elements.namedItem('text') as HTMLInputElement;
           const text = input.value.trim();
           if (text === '') return;
-          this.updateNoteUseCase.execute(id, text);
+          const result = this.updateNoteUseCase.execute(id, text);
+          if (isErr(result)) {
+            const errorEl = form.querySelector<HTMLElement>(
+              '[data-region="error"]',
+            );
+            if (errorEl !== null) errorEl.textContent = t('save_failed');
+            return;
+          }
           this.editingId = null;
           this.render();
         });
       });
-
-    // Touch `t` to avoid unused param warning when there are no items.
-    void t;
   }
 }

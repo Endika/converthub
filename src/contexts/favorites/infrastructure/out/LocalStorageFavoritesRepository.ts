@@ -4,6 +4,8 @@ import {
   type FavoriteType,
 } from '../../domain/model/Favorite';
 import type { FavoritesRepositoryPort } from '../../domain/ports/out/FavoritesRepositoryPort';
+import { err, ok, type Result } from '../../../../shared-kernel/domain/Result';
+import { StorageWriteError } from '../../../../shared-kernel/domain/StorageWriteError';
 
 const STORAGE_KEY = 'converthub:favorites';
 
@@ -61,9 +63,9 @@ export class LocalStorageFavoritesRepository implements FavoritesRepositoryPort 
   constructor(private readonly storage: Storage = localStorage) {}
 
   loadAll(): Favorite[] {
-    const raw = this.storage.getItem(STORAGE_KEY);
-    if (raw === null) return [];
     try {
+      const raw = this.storage.getItem(STORAGE_KEY);
+      if (raw === null) return [];
       const parsed: unknown = JSON.parse(raw);
       if (!Array.isArray(parsed)) return [];
       return parsed.filter(isPersistedFavorite).map(toEntity);
@@ -72,10 +74,15 @@ export class LocalStorageFavoritesRepository implements FavoritesRepositoryPort 
     }
   }
 
-  saveAll(favorites: readonly Favorite[]): void {
-    this.storage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(favorites.map(toPersisted)),
-    );
+  saveAll(favorites: readonly Favorite[]): Result<void, StorageWriteError> {
+    try {
+      this.storage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(favorites.map(toPersisted)),
+      );
+      return ok(undefined);
+    } catch {
+      return err(new StorageWriteError());
+    }
   }
 }

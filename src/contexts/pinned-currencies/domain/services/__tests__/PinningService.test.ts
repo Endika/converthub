@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { isErr, isOk } from '../../../../../shared-kernel/domain/Result';
+import {
+  err,
+  isErr,
+  isOk,
+  ok,
+} from '../../../../../shared-kernel/domain/Result';
+import { StorageWriteError } from '../../../../../shared-kernel/domain/StorageWriteError';
 import { PinnedCurrenciesFullError } from '../../errors/PinnedCurrenciesFullError';
 import { PinnedCurrency } from '../../model/PinnedCurrency';
 import type { PinnedCurrenciesRepositoryPort } from '../../ports/out/PinnedCurrenciesRepositoryPort';
@@ -7,12 +13,15 @@ import { PinningService } from '../PinningService';
 
 const buildRepo = (
   initial: PinnedCurrency[] = [],
+  failSave = false,
 ): PinnedCurrenciesRepositoryPort => {
   let state = initial;
   return {
     loadAll: () => [...state],
     saveAll: (items) => {
+      if (failSave) return err(new StorageWriteError());
       state = [...items];
+      return ok(undefined);
     },
   };
 };
@@ -57,5 +66,12 @@ describe('PinningService', () => {
     const service = new PinningService(buildRepo([new PinnedCurrency('EUR')]));
     expect(service.isPinned('EUR')).toBe(true);
     expect(service.isPinned('USD')).toBe(false);
+  });
+
+  it('reports a StorageWriteError instead of claiming a currency was pinned', () => {
+    const service = new PinningService(buildRepo([], true));
+    const r = service.pin('USD');
+    expect(isErr(r)).toBe(true);
+    if (isErr(r)) expect(r.error).toBeInstanceOf(StorageWriteError);
   });
 });

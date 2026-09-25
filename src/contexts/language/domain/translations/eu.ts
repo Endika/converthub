@@ -58,6 +58,7 @@ const eu: Translations = {
   note_text_placeholder: 'Gehitu ohar bat…',
   note_location_placeholder: 'Kokapena',
   notes_full: 'Oharren mugara iritsi da',
+  save_failed: 'Ezin izan da gorde. Saiatu berriro.',
   favorites_empty: 'Oraindik gogokorik ez',
   notes_empty: 'Oraindik oharrik ez',
   history_empty: 'Oraindik bihurketarik ez',
