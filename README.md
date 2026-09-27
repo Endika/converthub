@@ -10,14 +10,14 @@
 [![Conventional Commits](https://img.shields.io/badge/conventional_commits-1.0.0-FE5196?style=flat-square)](https://www.conventionalcommits.org)
 [![License: MIT](https://img.shields.io/github/license/Endika/converthub?style=flat-square&color=10B981)](./LICENSE)
 
-ConvertHub is the travel companion that pays the right tip, tells you what 5,000 yen actually costs you in euros, and figures out whether you fit a size 8 in Italy — without burning your data roaming. Install it on your phone or laptop and it just works on the plane, in the metro, anywhere. No account. No ads. No tracking.
+ConvertHub is the travel companion that pays the right tip, tells you what 5,000 yen actually costs you in euros, and figures out what a US size 8 is in Europe — without burning your data roaming. Install it on your phone or laptop and it just works on the plane, in the metro, anywhere. No account. No ads. No tracking.
 
 ## What you can do
 
 - **Currencies.** All 160+, with the last rates cached so you don't need signal at the restaurant.
-- **Tip calculator.** Type the bill in the local currency, see tip and total in both currencies. Defaults adjust per country — USA 18%, Japan 0%, Spain 10%. Split between any number of people, round up the total if you want.
+- **Tip calculator.** Type the bill in the local currency, see tip and total in both currencies. Defaults follow the bill's currency — dollars 18%, yen 0%, euros 10%. Split between any number of people, round up the total if you want.
 - **Distance, weight, volume, temperature, speed.** The everyday conversions you actually need abroad.
-- **Clothing & shoe sizes.** EU / US / UK for men, women and kids — the part of travel nobody tells you about until you're in the fitting room.
+- **Clothing & shoe sizes.** EU / US / UK for men and women — the part of travel nobody tells you about until you're in the fitting room.
 - **Travel notes.** Jot down "the café near Plaza Mayor" with a location attached.
 - **Favorites & history.** Pin the conversions you do most often, replay the last 20.
 - **Three languages.** English, Spanish, Basque.
@@ -56,4 +56,4 @@ npm run e2e             # end-to-end (playwright)
 npm run build           # production build with service worker
 ```
 
-Requires Node ≥ 20, npm ≥ 9. CI runs lint, typecheck, tests and the production build on every PR.
+Requires Node ≥ 22.12, npm ≥ 9. CI runs lint, typecheck, tests and the production build on every PR.
