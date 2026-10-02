@@ -1,0 +1,9 @@
+identity:
+  bot_login: specster-endika[bot]
+budget:
+  max_usd_per_issue: 2.0
+  max_usd_per_build: 1.5
+build:
+  tools: {node: "22"}
+  setup_command: [npm, ci]
+  test_command: [npm, run, test:run]
