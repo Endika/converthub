@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.2](https://github.com/Endika/converthub/compare/v1.11.1...v1.11.2) (2026-10-02)
+
+
+### Bug Fixes
+
+* **deps:** bump transitive brace-expansion past GHSA quadratic expansion ([990179f](https://github.com/Endika/converthub/commit/990179fce6dc46edeb78eca0fa95b6fbef00d9a3))
+
 ## [1.11.1](https://github.com/Endika/converthub/compare/v1.11.0...v1.11.1) (2026-09-25)
 
 
