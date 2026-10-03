@@ -61,7 +61,7 @@ const es: Translations = {
   save_failed: 'No se pudo guardar. Inténtalo de nuevo.',
   favorites_empty: 'Aún no hay favoritos',
   notes_empty: 'Aún no hay notas',
-  history_empty: 'Aún no hay conversiones',
+  history_empty: 'Aún no hay conversiones. Tus conversiones aparecerán aquí.',
   settings_provider_title: 'Fuente de tipos de cambio',
   settings_provider_description:
     'Ambas fuentes actualizan una vez al día. Compáralas si un cambio se ve raro.',
