@@ -11,7 +11,7 @@ if (root === null) {
 }
 
 const container = buildContainer();
-new HomePage(root, container);
+new HomePage(root, container, __APP_VERSION__);
 
 const exchangeRateService = container.get<ExchangeRateService>(
   SERVICES.exchangeRateService,
@@ -24,9 +24,3 @@ if (exchangeRateService.needsUpdate()) {
 }
 
 registerSW({ immediate: true });
-
-const versionTag = document.createElement('span');
-versionTag.textContent = `v${__APP_VERSION__}`;
-versionTag.className = 'app-version';
-versionTag.setAttribute('aria-label', `ConvertHub version ${__APP_VERSION__}`);
-document.body.appendChild(versionTag);

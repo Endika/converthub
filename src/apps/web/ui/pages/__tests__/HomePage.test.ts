@@ -79,6 +79,23 @@ describe('HomePage', () => {
     expect(converter?.querySelector(selector)).not.toBeNull();
   });
 
+  it('renders the version footer right after main when a version is given', () => {
+    const root = document.createElement('div');
+    new HomePage(root, buildContainer(), '1.2.3');
+    const footer = root.querySelector('footer.app-footer');
+    expect(footer).not.toBeNull();
+    expect(footer?.textContent).toBe('ConvertHub v1.2.3');
+    expect(root.querySelector('main.app-main')?.nextElementSibling).toBe(
+      footer,
+    );
+  });
+
+  it('renders no footer when no version is given', () => {
+    const root = document.createElement('div');
+    new HomePage(root, buildContainer());
+    expect(root.querySelector('footer')).toBeNull();
+  });
+
   it('throws when the layout regions are missing', () => {
     const root = document.createElement('div');
     const original = root.querySelector.bind(root);

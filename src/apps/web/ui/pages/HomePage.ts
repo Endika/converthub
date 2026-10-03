@@ -125,6 +125,7 @@ export class HomePage {
   constructor(
     private readonly root: HTMLElement,
     private readonly container: Container,
+    private readonly version?: string,
   ) {
     this.render();
   }
@@ -141,6 +142,14 @@ export class HomePage {
         <section class="card" data-region="side"></section>
       </main>
     `;
+
+    if (this.version !== undefined && this.version !== '') {
+      const footer = document.createElement('footer');
+      footer.className = 'app-footer';
+      footer.dataset['region'] = 'footer';
+      footer.textContent = `ConvertHub v${this.version}`;
+      this.root.querySelector('main.app-main')?.after(footer);
+    }
 
     const langRegion = this.root.querySelector<HTMLElement>(
       '[data-region="language"]',
