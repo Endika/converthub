@@ -140,6 +140,7 @@ export class HomePage {
         <section class="card" data-region="converter"></section>
         <section class="card" data-region="side"></section>
       </main>
+      <footer class="app-footer" data-region="footer">ConvertHub v${__APP_VERSION__}</footer>
     `;
 
     const langRegion = this.root.querySelector<HTMLElement>(

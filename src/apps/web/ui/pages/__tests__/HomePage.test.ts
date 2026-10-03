@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import pkg from '../../../../../../package.json' with { type: 'json' };
 import { buildContainer } from '../../../di/setup';
 import { HomePage } from '../HomePage';
 
@@ -11,6 +12,17 @@ describe('HomePage', () => {
     expect(root.querySelector('[data-region="side"]')).not.toBeNull();
     expect(root.querySelectorAll('[data-side-tab]')).toHaveLength(4);
     expect(root.querySelectorAll('[data-lang]')).toHaveLength(3);
+  });
+
+  it('renders a version footer right after the main content', () => {
+    const root = document.createElement('div');
+    new HomePage(root, buildContainer());
+    const main = root.querySelector('.app-main');
+    const footer = root.querySelector('[data-region="footer"]');
+    expect(footer).not.toBeNull();
+    expect(main?.nextElementSibling).toBe(footer);
+    expect(footer?.classList.contains('app-footer')).toBe(true);
+    expect(footer?.textContent).toBe(`ConvertHub v${pkg.version}`);
   });
 
   it('refreshes the history list when a conversion is submitted', () => {
