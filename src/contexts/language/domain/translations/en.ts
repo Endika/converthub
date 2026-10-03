@@ -61,7 +61,7 @@ const en: Translations = {
   save_failed: "Couldn't save. Try again.",
   favorites_empty: 'No favorites yet',
   notes_empty: 'No notes yet',
-  history_empty: 'No conversions yet',
+  history_empty: 'No conversions yet. Your conversions will appear here.',
   settings_provider_title: 'Exchange rate source',
   settings_provider_description:
     'Both sources update once a day. Compare them when a rate looks off.',
