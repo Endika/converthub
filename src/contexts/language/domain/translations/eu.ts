@@ -61,7 +61,7 @@ const eu: Translations = {
   save_failed: 'Ezin izan da gorde. Saiatu berriro.',
   favorites_empty: 'Oraindik gogokorik ez',
   notes_empty: 'Oraindik oharrik ez',
-  history_empty: 'Oraindik bihurketarik ez',
+  history_empty: 'Oraindik bihurketarik ez. Zure bihurketak hemen agertuko dira.',
   settings_provider_title: 'Truke-tasen iturria',
   settings_provider_description:
     'Bi iturriek egunean behin eguneratzen dira. Konparatu tasaren bat arraroa iruditzen bazaizu.',
