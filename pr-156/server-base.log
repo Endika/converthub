@@ -1,0 +1,32 @@
+
+> converthub@1.11.2 build
+> tsc --noEmit && vite build
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vite.config.ts:121:28). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 124 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/manifest.webmanifest                         0.40 kB
+dist/index.html                                   2.14 kB │ gzip:  1.09 kB
+dist/assets/index-BJ5jZ1wH.css                   10.78 kB │ gzip:  2.45 kB
+dist/assets/workbox-window.prod.es5-BLTxx3vi.js   5.68 kB │ gzip:  2.23 kB
+dist/assets/index-C6kf06Kj.js                    76.53 kB │ gzip: 18.02 kB
+
+✓ built in 585ms
+
+PWA v1.3.0
+mode      generateSW
+precache  9 entries (98.93 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-efbd304a.js
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vite.config.ts:121:28). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+  ➜  Local:   http://127.0.0.1:4173/
+
+serve base: killed by SIGKILL
