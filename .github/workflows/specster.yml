@@ -4,7 +4,7 @@ on:
   issues:
     types: [labeled]
   pull_request:
-    types: [closed]
+    types: [labeled, closed]
   workflow_dispatch:
     inputs:
       issue_number:
@@ -20,14 +20,13 @@ permissions:
   contents: read
   issues: write
 
-concurrency:
-  group: specster-issue-${{ github.event.issue.number || github.event.pull_request.number || inputs.issue_number }}
-  cancel-in-progress: false
-
 jobs:
   spec:
-    if: (github.event_name == 'workflow_dispatch' && inputs.phase != 'build') || github.event.label.name == 'ai-spec'
+    if: (github.event_name == 'workflow_dispatch' && inputs.phase != 'build') || (github.event_name == 'issues' && github.event.label.name == 'ai-spec')
     runs-on: ubuntu-latest
+    concurrency:
+      group: specster-issue-${{ github.event.issue.number || github.event.pull_request.number || inputs.issue_number }}
+      cancel-in-progress: false
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
@@ -43,8 +42,11 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
   build:
-    if: (github.event_name == 'workflow_dispatch' && inputs.phase == 'build') || github.event.label.name == 'ai-build'
+    if: (github.event_name == 'workflow_dispatch' && inputs.phase == 'build') || (github.event_name == 'issues' && github.event.label.name == 'ai-build')
     runs-on: ubuntu-latest
+    concurrency:
+      group: specster-issue-${{ github.event.issue.number || github.event.pull_request.number || inputs.issue_number }}
+      cancel-in-progress: false
     timeout-minutes: 120
     permissions:
       contents: write
@@ -64,9 +66,60 @@ jobs:
           phase: ${{ inputs.phase || 'build' }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
-  cleanup:
-    if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'specster/issue-') && github.event.pull_request.head.repo.full_name == github.repository
+  evidence:
+    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'ai-evidence' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    concurrency:
+      group: specster-issue-${{ github.event.issue.number || github.event.pull_request.number || inputs.issue_number }}
+      cancel-in-progress: false
+    timeout-minutes: 120
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/create-github-app-token@v3
+        id: app
+        with:
+          client-id: ${{ vars.SPECSTER_CLIENT_ID }}
+          private-key: ${{ secrets.SPECSTER_APP_KEY }}
+      - uses: Endika/specster@v0
+        with:
+          github_token: ${{ steps.app.outputs.token }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+  fix:
+    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'ai-fix' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    concurrency:
+      group: specster-issue-${{ github.event.issue.number || github.event.pull_request.number || inputs.issue_number }}
+      cancel-in-progress: false
+    timeout-minutes: 120
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/create-github-app-token@v3
+        id: app
+        with:
+          client-id: ${{ vars.SPECSTER_CLIENT_ID }}
+          private-key: ${{ secrets.SPECSTER_APP_KEY }}
+      - uses: Endika/specster@v0
+        with:
+          github_token: ${{ steps.app.outputs.token }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+  cleanup:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    concurrency:
+      group: specster-issue-${{ github.event.issue.number || github.event.pull_request.number || inputs.issue_number }}
+      cancel-in-progress: false
     timeout-minutes: 5
     permissions:
       contents: write
