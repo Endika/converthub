@@ -36,6 +36,10 @@ jobs:
           client-id: ${{ vars.SPECSTER_CLIENT_ID }}
           private-key: ${{ secrets.SPECSTER_APP_KEY }}
       - uses: Endika/specster@v0
+        env:
+          OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.datadoghq.eu
+          OTEL_EXPORTER_OTLP_HEADERS: dd-api-key=${{ secrets.DD_API_KEY }}
+          OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: delta
         with:
           github_token: ${{ steps.app.outputs.token }}
           issue_number: ${{ inputs.issue_number }}
@@ -60,6 +64,10 @@ jobs:
           client-id: ${{ vars.SPECSTER_CLIENT_ID }}
           private-key: ${{ secrets.SPECSTER_APP_KEY }}
       - uses: Endika/specster@v0
+        env:
+          OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.datadoghq.eu
+          OTEL_EXPORTER_OTLP_HEADERS: dd-api-key=${{ secrets.DD_API_KEY }}
+          OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: delta
         with:
           github_token: ${{ steps.app.outputs.token }}
           issue_number: ${{ inputs.issue_number }}
@@ -86,6 +94,10 @@ jobs:
           client-id: ${{ vars.SPECSTER_CLIENT_ID }}
           private-key: ${{ secrets.SPECSTER_APP_KEY }}
       - uses: Endika/specster@v0
+        env:
+          OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.datadoghq.eu
+          OTEL_EXPORTER_OTLP_HEADERS: dd-api-key=${{ secrets.DD_API_KEY }}
+          OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: delta
         with:
           github_token: ${{ steps.app.outputs.token }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -110,6 +122,10 @@ jobs:
           client-id: ${{ vars.SPECSTER_CLIENT_ID }}
           private-key: ${{ secrets.SPECSTER_APP_KEY }}
       - uses: Endika/specster@v0
+        env:
+          OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.datadoghq.eu
+          OTEL_EXPORTER_OTLP_HEADERS: dd-api-key=${{ secrets.DD_API_KEY }}
+          OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: delta
         with:
           github_token: ${{ steps.app.outputs.token }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -133,5 +149,9 @@ jobs:
           client-id: ${{ vars.SPECSTER_CLIENT_ID }}
           private-key: ${{ secrets.SPECSTER_APP_KEY }}
       - uses: Endika/specster@v0
+        env:
+          OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.datadoghq.eu
+          OTEL_EXPORTER_OTLP_HEADERS: dd-api-key=${{ secrets.DD_API_KEY }}
+          OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: delta
         with:
           github_token: ${{ steps.app.outputs.token }}
