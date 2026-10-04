@@ -60,7 +60,7 @@ const en: Translations = {
   notes_full: 'Notes limit reached',
   save_failed: "Couldn't save. Try again.",
   favorites_empty: 'No favorites yet',
-  notes_empty: 'No notes yet',
+  notes_empty: 'No notes yet. Notes you add will appear here.',
   history_empty: 'No conversions yet',
   settings_provider_title: 'Exchange rate source',
   settings_provider_description:
