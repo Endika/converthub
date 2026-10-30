@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.3](https://github.com/Endika/converthub/compare/v1.11.2...v1.11.3) (2026-10-30)
+
+
+### Bug Fixes
+
+* **deps:** bump serialize-javascript to 7.1.3 ([6db3055](https://github.com/Endika/converthub/commit/6db30558e4d1655bedeadd62d26279f09d62b425))
+
 ## [1.11.2](https://github.com/Endika/converthub/compare/v1.11.1...v1.11.2) (2026-10-02)
 
 
