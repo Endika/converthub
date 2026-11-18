@@ -35,7 +35,7 @@ jobs:
         with:
           client-id: ${{ vars.SPECSTER_CLIENT_ID }}
           private-key: ${{ secrets.SPECSTER_APP_KEY }}
-      - uses: Endika/specster@v0
+      - uses: Endika/specster@v1
         env:
           OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.datadoghq.eu
           OTEL_EXPORTER_OTLP_HEADERS: dd-api-key=${{ secrets.DD_API_KEY }}
@@ -63,7 +63,7 @@ jobs:
         with:
           client-id: ${{ vars.SPECSTER_CLIENT_ID }}
           private-key: ${{ secrets.SPECSTER_APP_KEY }}
-      - uses: Endika/specster@v0
+      - uses: Endika/specster@v1
         env:
           OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.datadoghq.eu
           OTEL_EXPORTER_OTLP_HEADERS: dd-api-key=${{ secrets.DD_API_KEY }}
@@ -93,7 +93,7 @@ jobs:
         with:
           client-id: ${{ vars.SPECSTER_CLIENT_ID }}
           private-key: ${{ secrets.SPECSTER_APP_KEY }}
-      - uses: Endika/specster@v0
+      - uses: Endika/specster@v1
         env:
           OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.datadoghq.eu
           OTEL_EXPORTER_OTLP_HEADERS: dd-api-key=${{ secrets.DD_API_KEY }}
@@ -121,7 +121,7 @@ jobs:
         with:
           client-id: ${{ vars.SPECSTER_CLIENT_ID }}
           private-key: ${{ secrets.SPECSTER_APP_KEY }}
-      - uses: Endika/specster@v0
+      - uses: Endika/specster@v1
         env:
           OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.datadoghq.eu
           OTEL_EXPORTER_OTLP_HEADERS: dd-api-key=${{ secrets.DD_API_KEY }}
@@ -148,7 +148,7 @@ jobs:
         with:
           client-id: ${{ vars.SPECSTER_CLIENT_ID }}
           private-key: ${{ secrets.SPECSTER_APP_KEY }}
-      - uses: Endika/specster@v0
+      - uses: Endika/specster@v1
         env:
           OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.datadoghq.eu
           OTEL_EXPORTER_OTLP_HEADERS: dd-api-key=${{ secrets.DD_API_KEY }}
