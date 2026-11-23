@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.4](https://github.com/Endika/converthub/compare/v1.11.3...v1.11.4) (2026-11-23)
+
+
+### Bug Fixes
+
+* **pwa:** precache the app again so installed apps update ([dbbad9c](https://github.com/Endika/converthub/commit/dbbad9c8feede308c9e366ceb245925ab5eff3cf))
+
 ## [1.11.3](https://github.com/Endika/converthub/compare/v1.11.2...v1.11.3) (2026-10-30)
 
 
